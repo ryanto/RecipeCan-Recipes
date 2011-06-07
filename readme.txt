@@ -2,9 +2,8 @@
 Contributors: ryanto
 Donate link: http://www.recipecan.com
 Tags: recipe, recipes, recipecan
-Requires at least: 2.0.2
-Tested up to: 2.1
-Stable tag: 4.3
+Requires at least: 2.8
+Tested up to: 2.8
 
 A wordpress plugin to that organizes recipes on for blog.
 

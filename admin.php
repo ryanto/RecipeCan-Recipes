@@ -43,7 +43,6 @@ class RecipeCan_Admin extends RecipeCan_Abstract {
                     $this->options['plugin_url'] . '/images/icon.png'
             );
 
-            
             foreach ($noshow_pages as $slug => $data) {
                 add_submenu_page(
                         'RecipeCan_NoShow_Menu',
@@ -55,15 +54,14 @@ class RecipeCan_Admin extends RecipeCan_Abstract {
                 );
             }
 
-            $submenu_pages = array();
             foreach ($pages as $slug => $data) {
-                $submenu_pages[] = add_submenu_page(
-                                'recipecan_recipes',
-                                $data['title'] . " | RecipeCan Recipes",
-                                $data['title'],
-                                'manage_options',
-                                $slug,
-                                array(&$this, 'router')
+                add_submenu_page(
+                        'recipecan_recipes',
+                        $data['title'] . " | RecipeCan Recipes",
+                        $data['title'],
+                        'manage_options',
+                        $slug,
+                        array(&$this, 'router')
                 );
             }
         }
@@ -74,11 +72,24 @@ class RecipeCan_Admin extends RecipeCan_Abstract {
     }
 
     public function setup() {
-        $this->render('admin/setup');
+        $this->view->render('admin/setup');
     }
 
     public function login() {
-        echo 'enter login';
+        $this->view->render('admin/login');
+    }
+
+    public function login_post() {
+        // try to login to recipecan
+        $login = $this->api->login(array(
+            'email' => $this->request('login'),
+            'password' => $this->request('password')
+        ));
+
+        // if fail redirect back show message
+        // get access key
+        // save it to db
+        //
     }
 
     public function create_account() {
@@ -97,5 +108,5 @@ class RecipeCan_Admin extends RecipeCan_Abstract {
 
 $recipecan_admin = new RecipeCan_Admin();
 $recipecan_admin->options = $recipecan_options;
-$recipecan_admin->run();
+$recipecan_admin->start();
 ?>

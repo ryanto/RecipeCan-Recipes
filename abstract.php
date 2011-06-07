@@ -1,11 +1,28 @@
 <?php
 
+require 'view.php';
+require 'api.php';
+
 abstract class RecipeCan_Abstract {
+
+    abstract function run();
 
     public $options;
 
-    public function render($file) {
-        require $this->options['path'] . '/views/' . $file . '.phtml';
+    protected $view;
+    protected $api;
+
+    public function preRunHook() {
+        $this->api = new RecipeCan_Api();
+        $this->api->options = $this->options;
+
+        $this->view = new RecipeCan_View();
+        $this->view->options = $this->options;
+    }
+
+    public function start() {
+        $this->preRunHook();
+        $this->run();
     }
 
     public function request($var) {
@@ -39,11 +56,10 @@ abstract class RecipeCan_Abstract {
         } else {
             $post_func_call = "_" . $method;
         }
-        
-        $this->{$call . $post_func_call}();
+
+        $this->{$call . $post_func_call} ();
     }
 
 }
-
 
 ?>

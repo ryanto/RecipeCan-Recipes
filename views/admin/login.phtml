@@ -1,0 +1,26 @@
+<h2>Login To RecipeCan</h2>
+
+<p>
+    To login to your RecipeCan account just enter your details below.
+</p>
+
+<form method="post" action="?page=recipecan_login">
+    <input type="hidden" name="method" value="post">
+
+    <ul>
+        <li>
+            <label for="email">E-mail:</label><br />
+            <input name="email" name="email" id="email" />
+        </li>
+
+        <li>
+            <label for="password">Password:</label><br />
+            <input name="password" name="password" id="password" />
+        </li>
+    </ul>
+    
+
+    <input class="button-primary" type="submit" name="Save" value="<?php _e("Login"); ?>" id="submitbutton" />
+
+
+</form>
