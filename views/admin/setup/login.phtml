@@ -4,18 +4,26 @@
     To login to your RecipeCan account just enter your details below.
 </p>
 
+<?php if ($this->get('error') != '') { ?>
+    <b>Error</b>
+    <div>
+        <?php echo $this->get('error') ?>
+    </div>
+    <br />
+<?php } ?>
+
 <form method="post" action="?page=recipecan_login">
     <input type="hidden" name="method" value="post">
 
     <ul>
         <li>
             <label for="email">E-mail:</label><br />
-            <input name="email" name="email" id="email" />
+            <input name="email" name="email" id="email" size="48" />
         </li>
 
         <li>
             <label for="password">Password:</label><br />
-            <input name="password" name="password" id="password" />
+            <input name="password" type="password" id="password" size="48" />
         </li>
     </ul>
     

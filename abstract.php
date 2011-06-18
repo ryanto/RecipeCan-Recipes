@@ -33,9 +33,16 @@ abstract class RecipeCan_Abstract {
         }
     }
 
+    public function add_option($name, $value) {
+        add_option($this->options['prefix'] . $name, $value);
+    }
+
+    public function get_option($name) {
+        return get_option($this->options['prefix'] . $name);
+    }
+
     public function call() {
-        $prefix = 'recipecan_';
-        return substr($this->request('page'), strlen($prefix));
+        return substr($this->request('page'), strlen($this->options['prefix']));
     }
 
     public function method() {
@@ -57,7 +64,7 @@ abstract class RecipeCan_Abstract {
             $post_func_call = "_" . $method;
         }
 
-        $this->{$call . $post_func_call} ();
+        $this->{$call . $post_func_call}();
     }
 
 }

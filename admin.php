@@ -9,7 +9,8 @@ class RecipeCan_Admin extends RecipeCan_Abstract {
     }
 
     public function has_required_settings() {
-        return false;
+        $token = $this->get_option('single_access_token');
+        return ($token != '');
     }
 
     public function admin_menu() {
@@ -20,7 +21,11 @@ class RecipeCan_Admin extends RecipeCan_Abstract {
                 'recipecan_settings' => array(
                     'title' => 'Settings',
                     'call' => 'settings'
-                )
+                ),
+                'recipecan_user_info' => array(
+                    'title' => 'User Info',
+                    'call' => 'user_info'
+                ),
             );
 
             $noshow_pages = array(
@@ -67,40 +72,118 @@ class RecipeCan_Admin extends RecipeCan_Abstract {
         }
     }
 
-    public function settings() {
-        echo 'settings page';
-    }
-
     public function setup() {
-        $this->view->render('admin/setup');
+        $this->view->render('admin/setup/index');
     }
 
     public function login() {
-        $this->view->render('admin/login');
+        $this->view->render('admin/setup/login');
     }
 
     public function login_post() {
         // try to login to recipecan
         $login = $this->api->login(array(
-            'email' => $this->request('login'),
-            'password' => $this->request('password')
-        ));
+                    'email' => $this->request('email'),
+                    'password' => $this->request('password')
+                ));
 
-        // if fail redirect back show message
-        // get access key
-        // save it to db
-        //
+        if (!$login['success']) {
+            // failed
+            $this->view->set('error', $login['message']);
+            $this->view->render('admin/setup/login');
+        } else {
+            // it worked
+            // log the token to the settings table
+            $this->add_option('single_access_token', $login['single_access_token']);
+            $this->view->render('admin/setup/complete');
+        }
     }
 
     public function create_account() {
-        echo 'called';
+        $single_access_token = $this->get_option('single_access_token');
+
+        if ($single_access_token != '') {
+            $this->view->set('message', 'You already have an account.');
+            $this->view->render('admin/error');
+        } else {
+            $this->view->set('blog_name', get_option('blogname'));
+            $this->view->set('blog_url', get_option('siteurl'));
+            $this->view->render('admin/setup/create');
+        }
+    }
+
+    public function create_account_post() {
+        $single_access_token = $this->get_option('single_access_token');
+
+        if ($single_access_token != '') {
+            $this->view->set('message', 'You already have an account.');
+            $this->view->render('admin/error');
+        } else {
+
+            // try to create
+            $create = $this->api->create_account(array(
+                        'user' => $this->request('user')
+                    ));
+
+            if (!$create['success']) {
+                // if fail, reprint with set options
+                $this->view->set('errors', $create['errors']);
+
+                $forms = array(
+                    'user' => array(
+                        'first_name', 'last_name', 'email', 'login',
+                        'password', 'password_confirmation',
+                    ),
+                    'outside_blog' => array(
+                        'name', 'url'
+                    )
+                );
+
+                foreach ($forms as $form_name => $form_fields) {
+                    $submitted_form = $this->request($form_name);
+                    foreach ($form_fields as $field) {
+                        $this->view->set($field, $submitted_form[$field]);
+                    }
+                }
+
+                $this->view->render('admin/setup/create');
+            } else {
+                // success
+                // set token
+                $this->add_option('single_access_token', $create['single_access_token']);
+
+                // submit blog info
+                $this->api->create_outside_blog(array(
+                   'outside_blog' => $this->request('outside_blog')
+                ));
+
+                $this->view->render('admin/setup/complete');
+            }
+
+        }
+    }
+
+    public function user_info() {
+        if (!$this->has_required_settings()) {
+            $this->setup();
+        } else {
+            $this->api->user();
+        }
     }
 
     public function recipes() {
-        if ($this->has_required_settings()) {
-            echo 'hello world';
-        } else {
+        if (!$this->has_required_settings()) {
             $this->setup();
+        } else {
+            echo 'recipes page';
+        }
+    }
+
+    public function settings() {
+        if (!$this->has_required_settings()) {
+            $this->setup();
+        } else {
+            echo 'settings page';
         }
     }
 

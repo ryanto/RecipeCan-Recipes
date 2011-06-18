@@ -17,6 +17,7 @@ $recipecan_options = array(
     'request' => $_REQUEST,
     'api_server' => 'www.recipecan.dev',
     'api_version' => 'v1',
+    'prefix' => 'recipecan_'
 );
 
 if (is_admin ()) {

@@ -2,7 +2,6 @@
 
 class RecipeCan_View {
 
-    public $file;
     public $value = array();
     public $options;
 
@@ -15,8 +14,15 @@ class RecipeCan_View {
     }
 
     public function get($name) {
-        return $this->value[$name];
+        if (array_key_exists($name, $this->value)) {
+            return $this->value[$name];
+        } else {
+            return '';
+        }
     }
+
+
+
 }
 
 ?>

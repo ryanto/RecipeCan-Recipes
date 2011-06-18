@@ -1,0 +1,71 @@
+<h2>Setup RecipeCan</h2>
+
+<p>
+    Please fill in the following details to get started.
+</p>
+
+<?php if ($this->get('errors') != '') { ?>
+    <b>Errors</b>
+    <ul>
+        <?php foreach($this->get('errors') as $field => $errors) { ?>
+            <?php foreach($errors as $error) { ?>
+                <li><?php echo ucfirst($field); ?> <?php echo $error; ?></li>
+            <?php } ?>
+        <?php } ?>
+    </ul>
+    <br />
+<?php } ?>
+
+<form method="post" action="?page=recipecan_create_account">
+    <input type="hidden" name="method" value="post">
+
+    <b>User Information</b>
+    <ul>
+        <li>
+            <label for="first_name">First Name:</label><br />
+            <input name="user[first_name]" id="first_name" value="<?php echo $this->get('first_name') ?>" size="32" />
+        </li>
+
+        <li>
+            <label for="last_name">Last Name:</label><br />
+            <input name="user[last_name]" id="last_name" value="<?php echo $this->get('last_name') ?>" size="32" />
+        </li>
+
+        <li>
+            <label for="email">E-mail:</label><br />
+            <input name="user[email]" id="email" value="<?php echo $this->get('email') ?>" size="48" />
+        </li>
+
+        <li>
+            <label for="login">Username:</label><br />
+            <input name="user[login]" id="login" value="<?php echo $this->get('login') ?>" size="48" />
+        </li>
+
+        <li>
+            <label for="password">Password:</label><br />
+            <input name="user[password]" type="password" id="password" value="<?php echo $this->get('password') ?>" size="18" />
+        </li>
+
+        <li>
+            <label for="password_confirmation">Confirm Password:</label><br />
+            <input name="user[password_confirmation]" type="password" id="password" value="<?php echo $this->get('password_confirmation') ?>" size="18" />
+        </li>
+    </ul>
+
+    <b>Blog Details</b>
+    <ul>
+        <li>
+            <label for="blog_name">Blog Name:</label><br />
+            <input name="outside_blog[blog_name]" id="blog_name" value="<?php echo $this->get('blog_name') ?>" size="48" />
+        </li>
+
+        <li>
+            <label for="blog_url">Blog Url:</label><br />
+            <input name="outside_blog[blog_url]" id="blog_url" value="<?php echo $this->get('blog_url') ?>" size="64" />
+        </li>
+    </ul>
+
+    <input class="button-primary" type="submit" name="Save" value="Create Account" id="submitbutton" />
+
+
+</form>
