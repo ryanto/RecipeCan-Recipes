@@ -1,6 +1,7 @@
 <?php
 
-require 'abstract.php';
+require_once 'abstract.php';
+require_once 'models/recipes.php';
 
 class RecipeCan_Admin extends RecipeCan_Abstract {
 
@@ -82,19 +83,19 @@ class RecipeCan_Admin extends RecipeCan_Abstract {
 
     public function login_post() {
         // try to login to recipecan
-        $login = $this->api->login(array(
-                    'email' => $this->request('email'),
-                    'password' => $this->request('password')
-                ));
+        $this->api->login(array(
+            'email' => $this->request('email'),
+            'password' => $this->request('password')
+        ));
 
-        if (!$login['success']) {
+        if ($this->api->failed()) {
             // failed
-            $this->view->set('error', $login['message']);
+            $this->view->set('error', $this->api->response['message']);
             $this->view->render('admin/setup/login');
         } else {
             // it worked
             // log the token to the settings table
-            $this->add_option('single_access_token', $login['single_access_token']);
+            $this->add_option('single_access_token', $this->api->response['single_access_token']);
             $this->view->render('admin/setup/complete');
         }
     }
@@ -106,8 +107,8 @@ class RecipeCan_Admin extends RecipeCan_Abstract {
             $this->view->set('message', 'You already have an account.');
             $this->view->render('admin/error');
         } else {
-            $this->view->set('blog_name', get_option('blogname'));
-            $this->view->set('blog_url', get_option('siteurl'));
+            $this->view->set('name', get_option('blogname'));
+            $this->view->set('url', get_option('siteurl'));
             $this->view->render('admin/setup/create');
         }
     }
@@ -121,13 +122,13 @@ class RecipeCan_Admin extends RecipeCan_Abstract {
         } else {
 
             // try to create
-            $create = $this->api->create_account(array(
-                        'user' => $this->request('user')
-                    ));
+            $this->api->create_account(array(
+                'user' => $this->request('user')
+            ));
 
-            if (!$create['success']) {
+            if ($this->api->failed()) {
                 // if fail, reprint with set options
-                $this->view->set('errors', $create['errors']);
+                $this->view->set('errors', $this->api->response['errors']);
 
                 $forms = array(
                     'user' => array(
@@ -150,16 +151,15 @@ class RecipeCan_Admin extends RecipeCan_Abstract {
             } else {
                 // success
                 // set token
-                $this->add_option('single_access_token', $create['single_access_token']);
+                $this->add_option('single_access_token', $this->api->response['single_access_token']);
 
                 // submit blog info
                 $this->api->create_outside_blog(array(
-                   'outside_blog' => $this->request('outside_blog')
+                    'outside_blog' => $this->request('outside_blog')
                 ));
 
                 $this->view->render('admin/setup/complete');
             }
-
         }
     }
 
@@ -175,7 +175,16 @@ class RecipeCan_Admin extends RecipeCan_Abstract {
         if (!$this->has_required_settings()) {
             $this->setup();
         } else {
-            echo 'recipes page';
+            $recipes = new RecipeCan_Models_Recipes();
+            $recipes->options = $this->options;
+            $recipes->api = $this->api;
+
+            $recipes->download_recipes();
+
+            var_dump($recipes->recipes());
+
+            $this->view->set('recipes', $recipes->recipes());
+            $this->view->render('admin/recipes/index');
         }
     }
 

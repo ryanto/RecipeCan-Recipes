@@ -13,6 +13,7 @@ define('RECIPECAN_VERSION', '0.1');
 
 $recipecan_options = array(
     'plugin_url' => plugin_dir_url(__FILE__),
+    'plugin_version' => RECIPECAN_VERSION,
     'path' => dirname(__FILE__),
     'request' => $_REQUEST,
     'api_server' => 'www.recipecan.dev',
@@ -20,7 +21,7 @@ $recipecan_options = array(
     'prefix' => 'recipecan_'
 );
 
-if (is_admin ()) {
+if (is_admin()) {
     require_once dirname(__FILE__) . '/admin.php';
 }
 ?>

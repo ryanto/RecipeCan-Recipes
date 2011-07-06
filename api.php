@@ -6,11 +6,26 @@ class RecipeCan_Api {
 
     public $options;
 
-    public function call($verb, $url, $args) {
+    public $response;
+
+    public function call($verb, $url, $args = array()) {
+
+        $api_key = get_option('recipecan_single_access_token');
 
         echo "<b>request</b><br/>";
         var_dump($args);
         echo "<br/><br/>";
+
+        $request_url = 'http://' . $this->options['api_server'] . '/api/' .
+                $this->options['api_version'] . '/' . $url . '.js';
+
+        if ($api_key != '') {
+            $request_url .= '?user_credentials=' . $api_key;
+
+            echo "<b>api key</b><br>";
+            var_dump($api_key);
+            echo "<br><br>";
+        }
 
         $wp_remote_args = array(
             'method' => strtoupper($verb),
@@ -18,12 +33,7 @@ class RecipeCan_Api {
             'body' => $args,
         );
 
-        $response = wp_remote_request(
-                        'http://' . $this->options['api_server'] . '/api/' .
-                        $this->options['api_version'] . '/' . $url . '.js' .
-                        '?user_credentials=' . get_option('recipecan_single_access_token'),
-                        $wp_remote_args
-        );
+        $response = wp_remote_request($request_url, $wp_remote_args);
 
 
         echo "<b>raw response</b><br/>";
@@ -36,7 +46,16 @@ class RecipeCan_Api {
         var_dump($json_as_array);
         echo "<br/><br>";
 
+        $this->response = $json_as_array;
         return $json_as_array;
+    }
+    
+    public function failed() {
+        return array_key_exists('failed', $this->response);
+    }
+
+    public function success() {
+        return !$this->failed();
     }
 
     public function login($args) {
@@ -61,6 +80,10 @@ class RecipeCan_Api {
 
     public function update_outside_blog($args) {
         return $this->call('put', 'outside_blogs/' . $args['id'], $args);
+    }
+
+    public function recipes() {
+        $this->call('get', 'recipes');
     }
 
 }
