@@ -37,6 +37,10 @@ class RecipeCan_Admin extends RecipeCan_Abstract {
                 'recipecan_login' => array(
                     'title' => 'Login to Account',
                     'call' => 'login'
+                ),
+                'recipecan_recipe' => array(
+                    'title' => 'Edit Recipe',
+                    'call' => 'recipe'
                 )
             );
 
@@ -181,11 +185,52 @@ class RecipeCan_Admin extends RecipeCan_Abstract {
 
             $recipes->download_recipes();
 
-            var_dump($recipes->recipes());
-
             $this->view->set('recipes', $recipes->recipes());
             $this->view->render('admin/recipes/index');
         }
+    }
+
+    public function recipe() {
+        $recipes = new RecipeCan_Models_Recipes();
+        $recipes->options = $this->options;
+        $recipes->api = $this->api;
+        
+        $recipe = $recipes->find_by_id($this->request('id'));
+
+        if (!$recipe) {
+            $this->view->set('message', 'Recipe not found.');
+            $this->view->render('admin/error');
+        } else {
+            $this->view->set_data('recipe', $recipe);
+            $this->view->render('admin/recipes/edit');
+        }
+    }
+
+    public function recipe_put() {
+        echo "you are trying to save " . $this->request('id') . "<br><br>";
+
+        $recipes = $this->make_recipes();
+        $recipe = $recipes->find_by_id($this->request('id'));
+
+        $data = $this->request('recipe');
+        $data['id'] = $recipe['recipecan_id'];
+
+        // try to save via api
+        $this->api->update_recipe($data);
+        
+        // if that works update the db
+        if ($this->api->failed()) {
+            $this->view->set('error', 'error blah blah');
+            // set view from request
+            $this->view->set_data('recipe', $this->request('recipe'));
+            $this->view->render('admin/recipes/edit');
+        } else {
+
+        }
+
+        // reshow form with errors
+
+
     }
 
     public function settings() {

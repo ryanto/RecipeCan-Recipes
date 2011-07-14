@@ -21,6 +21,13 @@ class RecipeCan_View {
         }
     }
 
+    public function set_data($name, $data) {
+        foreach ($data as $attribute => $value) {
+            $this->set($name . "[" . $attribute . "]", $value);
+        }
+        $this->set($name, $data);
+    }
+
 
 
 }

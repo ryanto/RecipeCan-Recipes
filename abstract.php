@@ -67,6 +67,14 @@ abstract class RecipeCan_Abstract {
         $this->{$call . $post_func_call}();
     }
 
+    public function make_recipes() {
+        $recipes = new RecipeCan_Models_Recipes();
+        $recipes->options = $this->options;
+        $recipes->api = $this->api;
+
+        return $recipes;
+    }
+
 }
 
 ?>

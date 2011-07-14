@@ -5,7 +5,6 @@ require 'Zend/Json.php';
 class RecipeCan_Api {
 
     public $options;
-
     public $response;
 
     public function call($verb, $url, $args = array()) {
@@ -49,13 +48,13 @@ class RecipeCan_Api {
         $this->response = $json_as_array;
         return $json_as_array;
     }
-    
+
     public function failed() {
         return array_key_exists('failed', $this->response);
     }
 
     public function success() {
-        return !$this->failed();
+        return!$this->failed();
     }
 
     public function login($args) {
@@ -80,6 +79,12 @@ class RecipeCan_Api {
 
     public function update_outside_blog($args) {
         return $this->call('put', 'outside_blogs/' . $args['id'], $args);
+    }
+
+    public function update_recipe($args) {
+        return $this->call('put', 'recipes/' . $args['id'], array(
+            'recipe' => $args
+        ));
     }
 
     public function recipes() {

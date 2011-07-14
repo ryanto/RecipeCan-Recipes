@@ -1,5 +1,8 @@
 <h2>Your Recipes</h2>
 
 <?php foreach($this->get('recipes') as $recipe) { ?>
-    <?php echo $recipe->name ?><br />
+    <?php echo $recipe['name'] ?>
+    <a href="?page=recipecan_recipe&id=<?php echo $recipe['id'] ?>">Edit</a>
+
+    <br />
 <?php } ?>

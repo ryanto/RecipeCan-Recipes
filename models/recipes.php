@@ -4,6 +4,7 @@ require_once 'abstract.php';
 
 class RecipeCan_Models_Recipes extends RecipeCan_Models_Abstract {
 
+    protected $_name = 'recipe';
     protected $_table_name = 'recipes';
 
     protected $_table_columns = array(
@@ -14,7 +15,7 @@ class RecipeCan_Models_Recipes extends RecipeCan_Models_Abstract {
         'cuisine varchar(255) not null',
         'make_time varchar(255) not null',
         'servings varchar(255) not null',
-        'tags varchar(255) not null',
+        'tag_list varchar(255) not null',
 
         'photo_large varchar(255)',
         'photo_small varchar(255)',
@@ -22,7 +23,10 @@ class RecipeCan_Models_Recipes extends RecipeCan_Models_Abstract {
         'slug varchar(255) not null',
         "likes mediumint(9) not null",
 
-        "created_at datetime NOT NULL",
+        "ingredients text not null",
+        "directions text not null",
+
+        "created_at datetime not null",
         "make_time_in_seconds mediumint(9)",
     );
 

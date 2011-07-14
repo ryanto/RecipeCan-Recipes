@@ -5,6 +5,10 @@ class RecipeCan_Models_Abstract {
     public $options;
     public $api;
 
+    public function name() {
+        return $this->_name();
+    }
+
     public function add_option($name, $value) {
         add_option($this->options['prefix'] . $name, $value);
     }
@@ -50,9 +54,9 @@ class RecipeCan_Models_Abstract {
 
     public function save($data, $where) {
         global $wpdb;
-        $obj = $this->find($where);
+        $find = $this->find($where);
 
-        if ($obj) {
+        if ($find) {
             $this->_update($data, $where);
         } else {
             $this->_insert($data);
@@ -82,18 +86,22 @@ class RecipeCan_Models_Abstract {
                         $wpdb->prepare(
                                 "SELECT * FROM " . mysql_real_escape_string($this->table_name()) .
                                 " WHERE " . $where_string
-                        )
+                        ), ARRAY_A
         );
-        if (isset($obj->id)) {
+        if (isset($obj['id'])) {
             return $obj;
         } else {
             return null;
         }
     }
 
+    public function find_by_id($id) {
+        return $this->find(array('id' => $id));
+    }
+
     public function all() {
         global $wpdb;
-        return $wpdb->get_results('select * from ' . mysql_real_escape_string($this->table_name()));
+        return $wpdb->get_results('select * from ' . mysql_real_escape_string($this->table_name()), ARRAY_A);
     }
 
 }
