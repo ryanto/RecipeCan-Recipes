@@ -17,6 +17,7 @@ $recipecan_options = array(
     'path' => dirname(__FILE__),
     'request' => $_REQUEST,
     'api_server' => 'www.recipecan.dev',
+    'imgage_server' => 'www.recipecan.dev',
     'api_version' => 'v1',
     'prefix' => 'recipecan_'
 );

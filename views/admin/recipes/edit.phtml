@@ -2,6 +2,18 @@
 
 <h2>Edit <?php echo $recipe['name']; ?></h2>
 
+<?php if ($this->get('error')) { ?>
+
+    <h3>Errors</h3>
+    <?php foreach ($this->get('error') as $field => $errors) { ?>
+        <?php foreach ($errors as $error) { ?>
+            <?php echo ucfirst($field); ?> <?php echo $error; ?>.<br />
+        <?php } ?>
+    <?php } ?>
+
+<?php } ?>
+
+
 <form method="post" action="?page=recipecan_recipe&id=<?php echo $recipe['id']; ?>&method=put">
 
     <ul>
@@ -83,3 +95,23 @@
     <input class="button-primary" type="submit" name="Save" value="Update Recipe" id="submitbutton" />
 
 </form>
+
+
+<div>
+    <h3>Photo</h3>
+    <?php if ($recipe['photo_large']) { ?>
+        <div>
+            <img src="http://<?php echo $this->options['imgage_server']; ?><?php echo $recipe['photo_small']; ?>" alt="Recipe Photo" />
+        </div>
+        <div>
+            <a href="?page=recipecan_recipe_photo&id=<?php echo $recipe['id'] ?>">Change Photo</a>
+        </div>
+    <?php } else { ?>
+        <div>
+            There is no photo for this recipe.
+        </div>
+        <div>
+            <a href="?page=recipecan_recipe_photo&id=<?php echo $recipe['id'] ?>">Add Photo</a>
+        </div>
+    <?php } ?>
+</div>

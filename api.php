@@ -7,12 +7,12 @@ class RecipeCan_Api {
     public $options;
     public $response;
 
-    public function call($verb, $url, $args = array()) {
+    public function call($verb, $url, $args = array(), $headers = array()) {
 
         $api_key = get_option('recipecan_single_access_token');
 
         echo "<b>request</b><br/>";
-        var_dump($args);
+        //var_dump($args);
         echo "<br/><br/>";
 
         $request_url = 'http://' . $this->options['api_server'] . '/api/' .
@@ -26,11 +26,17 @@ class RecipeCan_Api {
             echo "<br><br>";
         }
 
+        echo "<b>request url</b><br>";
+        echo $request_url;
+        echo "<br><br>";
+
         $wp_remote_args = array(
+            'headers' => $headers,
             'method' => strtoupper($verb),
             'timeout' => 25,
             'body' => $args,
         );
+
 
         $response = wp_remote_request($request_url, $wp_remote_args);
 
@@ -85,6 +91,34 @@ class RecipeCan_Api {
         return $this->call('put', 'recipes/' . $args['id'], array(
             'recipe' => $args
         ));
+    }
+
+    public function create_recipe_photo($args) {
+
+        $handle = fopen($args['filename'], "rb");
+        $contents = fread($handle, filesize($args['filename']));
+        fclose($handle);
+
+        $headers = array(
+            'Content-Type' => 'multipart/form-data; boundary=RecipeCanUploadBound',
+        );
+
+        $payload = array(
+            "--RecipeCanUploadBound",
+            "Content-Disposition: form-data; name=\"photo[photo]\"; filename=\"image.jpg\"",
+            "Content-Transfer-Encoding: binary",
+            "Content-Type: image/jpeg",
+            "",
+            $contents,
+            "--RecipeCanUploadBound--",
+        );
+
+        $this->call(
+                'post',
+                'recipes/' . $args['recipe_id'] . '/photos',
+                implode("\r\n", $payload),
+                $headers
+        );
     }
 
     public function recipes() {

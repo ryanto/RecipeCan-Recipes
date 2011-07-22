@@ -41,6 +41,10 @@ class RecipeCan_Admin extends RecipeCan_Abstract {
                 'recipecan_recipe' => array(
                     'title' => 'Edit Recipe',
                     'call' => 'recipe'
+                ),
+                'recipecan_recipe_photo' => array(
+                    'title' => 'Recipe Photo',
+                    'call' => 'recipe_photo'
                 )
             );
 
@@ -191,10 +195,7 @@ class RecipeCan_Admin extends RecipeCan_Abstract {
     }
 
     public function recipe() {
-        $recipes = new RecipeCan_Models_Recipes();
-        $recipes->options = $this->options;
-        $recipes->api = $this->api;
-        
+        $recipes = $this->make_recipes();
         $recipe = $recipes->find_by_id($this->request('id'));
 
         if (!$recipe) {
@@ -207,8 +208,6 @@ class RecipeCan_Admin extends RecipeCan_Abstract {
     }
 
     public function recipe_put() {
-        echo "you are trying to save " . $this->request('id') . "<br><br>";
-
         $recipes = $this->make_recipes();
         $recipe = $recipes->find_by_id($this->request('id'));
 
@@ -217,20 +216,55 @@ class RecipeCan_Admin extends RecipeCan_Abstract {
 
         // try to save via api
         $this->api->update_recipe($data);
-        
-        // if that works update the db
+
         if ($this->api->failed()) {
-            $this->view->set('error', 'error blah blah');
+            $this->view->set('error', $this->api->response['error']);
+
             // set view from request
-            $this->view->set_data('recipe', $this->request('recipe'));
+            $view_data = $this->request('recipe');
+            $view_data['id'] = $this->request('id');
+            $this->view->set_data('recipe', $view_data);
+
             $this->view->render('admin/recipes/edit');
         } else {
-
+            // it worked
+            $recipes->save($this->api->response['recipe'], array('id' => $this->request('id')));
+            $this->view->render('admin/recipes/saved');
         }
+    }
 
-        // reshow form with errors
+    public function recipe_photo() {
+        $recipes = $this->make_recipes();
+        $recipe = $recipes->find_by_id($this->request('id'));
 
+        if (!$recipe) {
+            $this->view->set('message', 'Recipe not found.');
+            $this->view->render('admin/error');
+        } else {
+            $this->view->set_data('recipe', $recipe);
+            $this->view->render('admin/recipe_photo/show');
+        }
+    }
 
+    public function recipe_photo_post() {
+        $recipes = $this->make_recipes();
+        $recipe = $recipes->find_by_id($this->request('id'));
+
+        $this->api->create_recipe_photo(array(
+            'recipe_id' => $recipe['recipecan_id'],
+            'filename' => $_FILES['file']['tmp_name']
+        ));
+
+        $this->view->set_data('recipe', $recipe);
+
+        if ($this->api->failed()) {
+            $this->view->set('error', $this->api->response['error']);
+            $this->view->render('admin/recipe_photo/show');
+        } else {
+            $recipes->save($this->api->response['recipe'], array('id' => $this->request('id')));
+            $this->view->set('saved', true);
+            $this->view->render('admin/recipe_photo/show');
+        }
     }
 
     public function settings() {
