@@ -1,9 +1,8 @@
 <?php
 
 require_once 'abstract.php';
-require_once 'models/recipes.php';
 
-class RecipeCan_Admin extends RecipeCan_Abstract {
+class RecipeCan_Binders_Admin extends RecipeCan_Binders_Abstract {
 
     public function run() {
         add_action('admin_menu', array(&$this, 'admin_menu'));
@@ -183,13 +182,11 @@ class RecipeCan_Admin extends RecipeCan_Abstract {
         if (!$this->has_required_settings()) {
             $this->setup();
         } else {
-            $recipes = new RecipeCan_Models_Recipes();
-            $recipes->options = $this->options;
-            $recipes->api = $this->api;
+            $recipes = $this->make_recipes();
 
             $recipes->download_recipes();
 
-            $this->view->set('recipes', $recipes->recipes());
+            $this->view->set('recipes', $recipes->all_data());
             $this->view->render('admin/recipes/index');
         }
     }
@@ -277,7 +274,7 @@ class RecipeCan_Admin extends RecipeCan_Abstract {
 
 }
 
-$recipecan_admin = new RecipeCan_Admin();
+$recipecan_admin = new RecipeCan_Binders_Admin();
 $recipecan_admin->options = $recipecan_options;
 $recipecan_admin->start();
 ?>

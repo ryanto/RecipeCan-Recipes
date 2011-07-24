@@ -1,37 +1,17 @@
 <?php
 
-require 'view.php';
-require 'api.php';
+// boot order
+require_once 'api.php';
+require_once 'view.php';
 
+// models
+require_once $recipecan_options['path'] . '/models/recipes.php';
+
+// top most class
 abstract class RecipeCan_Abstract {
 
-    abstract function run();
-
     public $options;
-
-    protected $view;
-    protected $api;
-
-    public function preRunHook() {
-        $this->api = new RecipeCan_Api();
-        $this->api->options = $this->options;
-
-        $this->view = new RecipeCan_View();
-        $this->view->options = $this->options;
-    }
-
-    public function start() {
-        $this->preRunHook();
-        $this->run();
-    }
-
-    public function request($var) {
-        if (array_key_exists($var, $this->options['request'])) {
-            return $this->options['request'][$var];
-        } else {
-            return '';
-        }
-    }
+    public $api;
 
     public function add_option($name, $value) {
         add_option($this->options['prefix'] . $name, $value);
@@ -41,38 +21,38 @@ abstract class RecipeCan_Abstract {
         return get_option($this->options['prefix'] . $name);
     }
 
-    public function call() {
-        return substr($this->request('page'), strlen($this->options['prefix']));
+    public function get_post_type_name() {
+        $option = $this->get_option('post_type_name');
+        if (!$option) {
+            $option = $this->generate_post_type_name();
+            $this->add_option('post_type_name', $option);
+        }
+        return $option;
     }
 
-    public function method() {
-        $method = $this->request('method');
-        if ($method == '') {
-            return 'get';
-        } else {
-            return $method;
+    public function generate_post_type_name($postfix = null) {
+        foreach ($this->options['register_global_names'] as $name) {
+            $try_name = $name . $postfix;
+            if (!post_type_exists($try_name)) {
+                return $try_name;
+            }
         }
-    }
-
-    public function router() {
-        $call = $this->call();
-        $method = $this->method();
-
-        if ($method == 'get') {
-            $post_func_call = '';
-        } else {
-            $post_func_call = "_" . $method;
-        }
-
-        $this->{$call . $post_func_call}();
+        // out of names to try
+        return $this->generate_post_type_name(rand(0, 100));
     }
 
     public function make_recipes() {
         $recipes = new RecipeCan_Models_Recipes();
         $recipes->options = $this->options;
-        $recipes->api = $this->api;
+        $recipes->api = $this->make_api();
 
         return $recipes;
+    }
+
+    public function make_api() {
+        $api = new RecipeCan_Api();
+        $api->options = $this->options;
+        return $api;
     }
 
 }

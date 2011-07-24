@@ -1,20 +1,9 @@
 <?php
 
-class RecipeCan_Models_Abstract {
-
-    public $options;
-    public $api;
+class RecipeCan_Models_Abstract extends RecipeCan_Abstract {
 
     public function name() {
         return $this->_name();
-    }
-
-    public function add_option($name, $value) {
-        add_option($this->options['prefix'] . $name, $value);
-    }
-
-    public function get_option($name) {
-        return get_option($this->options['prefix'] . $name);
     }
 
     public function table_name() {
@@ -74,6 +63,11 @@ class RecipeCan_Models_Abstract {
     }
 
     public function find($where) {
+
+        if (count($where) == 0) {
+            return null;
+        }
+
         global $wpdb;
 
         $sql = array();
@@ -82,14 +76,15 @@ class RecipeCan_Models_Abstract {
         }
         $where_string = implode(", ", $sql);
 
-        $obj = $wpdb->get_row(
+        $data = $wpdb->get_row(
                         $wpdb->prepare(
                                 "SELECT * FROM " . mysql_real_escape_string($this->table_name()) .
                                 " WHERE " . $where_string
                         ), ARRAY_A
         );
-        if (isset($obj['id'])) {
-            return $obj;
+
+        if (isset($data['id'])) {
+            return $this->make_row($data);
         } else {
             return null;
         }
@@ -99,9 +94,25 @@ class RecipeCan_Models_Abstract {
         return $this->find(array('id' => $id));
     }
 
-    public function all() {
+    public function all_data() {
         global $wpdb;
         return $wpdb->get_results('select * from ' . mysql_real_escape_string($this->table_name()), ARRAY_A);
+    }
+
+    public function all() {
+        $all = array();
+        foreach ($this->all_data() as $data) {
+            $all[] = $this->make_row($data);
+        }
+        return $all;
+    }
+
+    public function make_row($data) {
+        $name = "RecipeCan_Row_" . ucfirst($this->_name);
+        $row = new $name($data);
+        $row->options = $this->options;
+        $row->data = $data;
+        return $row;
     }
 
 }

@@ -2,14 +2,13 @@
 
 require 'Zend/Json.php';
 
-class RecipeCan_Api {
+class RecipeCan_Api extends RecipeCan_Abstract {
 
-    public $options;
     public $response;
 
     public function call($verb, $url, $args = array(), $headers = array()) {
 
-        $api_key = get_option('recipecan_single_access_token');
+        $api_key = $this->get_option('single_access_token');
 
         echo "<b>request</b><br/>";
         //var_dump($args);
