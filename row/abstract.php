@@ -15,11 +15,16 @@ abstract class RecipeCan_Row_Abstract extends RecipeCan_Abstract {
         
     }
 
+    public function get($data) {
+        if (isset($this->data[$data])) {
+            return $this->data[$data];
+        } else {
+            return '';
+        }
+    }
+
     private function _ensure_model() {
         if ($this->_model == null) {
-
-            var_dump('creating link to model');
-
             $name = "RecipeCan_Models_" . ucfirst($this->_name);
             $model = new $name();
             $model->options = $this->options;
@@ -32,14 +37,8 @@ abstract class RecipeCan_Row_Abstract extends RecipeCan_Abstract {
         $this->_ensure_model();
         
         if (isset($this->data['id'])) {
-
-            var_dump('trying to update');
-
             $this->_model->save($this->data, array('id' => $this->data['id']));
         } else {
-
-            var_dump('trying to save');
-
             $this->_model->save($this->data, array());
         }
     }

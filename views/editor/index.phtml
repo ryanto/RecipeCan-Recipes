@@ -1,0 +1,41 @@
+<h2>Insert Recipe</h2>
+
+<div>
+    Add a new Recipe
+</div>
+<div>
+    <?php $this->render('admin/recipes/new'); ?>
+</div>
+
+<div id="xxxx">xxxxxxxxx</div>
+
+<?php foreach($this->get('recipes') as $recipe) { ?>
+    <div>
+        <?php $this->p($recipe['name']); ?>
+        <a data-recipe-name="<?php $this->p($recipe['name']); ?>"
+           data-recipe-id="<?php $this->p($recipe['id']); ?>"
+           href="#"
+           class="recipecan_insert_recipe">Insert</a>
+    </div>
+<?php } ?>
+
+<script>
+jQuery(document).ready(function() {
+   console.log('i was loaded');
+
+    //tb_resize();
+   //console.log(jQuery('#TB_window').height());
+
+   //jQuery("#TB_ajaxContent").css("height", jQuery('#TB_window').height());
+   //jQuery("#TB_ajaxContent").css("width", 300);
+
+   //jQuery("#TB_window").css("height", "auto");
+   //jQuery("#TB_ajaxContent").css("height", "auto");
+
+
+   jQuery('#xxxx').click(function() {
+      jQuery("#TB_ajaxContent").css("height", "auto");
+   });
+
+});
+</script>

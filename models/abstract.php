@@ -41,7 +41,7 @@ class RecipeCan_Models_Abstract extends RecipeCan_Abstract {
         $this->add_option($this->table_name() . '_table_version', $this->options['plugin_version']);
     }
 
-    public function save($data, $where) {
+    public function save($data, $where = array()) {
         global $wpdb;
         $find = $this->find($where);
 
@@ -96,7 +96,12 @@ class RecipeCan_Models_Abstract extends RecipeCan_Abstract {
 
     public function all_data() {
         global $wpdb;
-        return $wpdb->get_results('select * from ' . mysql_real_escape_string($this->table_name()), ARRAY_A);
+        return $wpdb->get_results(
+                'select * from ' .
+                mysql_real_escape_string($this->table_name()) .
+                ' order by recipecan_id desc',
+                ARRAY_A
+        );
     }
 
     public function all() {
@@ -109,9 +114,8 @@ class RecipeCan_Models_Abstract extends RecipeCan_Abstract {
 
     public function make_row($data) {
         $name = "RecipeCan_Row_" . ucfirst($this->_name);
-        $row = new $name($data);
+        $row = new $name($data, $this);
         $row->options = $this->options;
-        $row->data = $data;
         return $row;
     }
 

@@ -28,6 +28,9 @@ class RecipeCan_View {
         $this->set($name, $data);
     }
 
+    public function p($str) {
+        echo htmlentities($str);
+    }
 
 
 }

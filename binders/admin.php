@@ -18,15 +18,23 @@ class RecipeCan_Binders_Admin extends RecipeCan_Binders_Abstract {
         if (current_user_can('manage_options')) {
 
             $pages = array(
+                'recipecan_new_recipe' => array(
+                    'title' => 'Add Recipe',
+                    'call' => 'new_recipe'
+                ),
+                /*
                 'recipecan_settings' => array(
                     'title' => 'Settings',
                     'call' => 'settings'
                 ),
+                 * 
+                 */
                 'recipecan_user_info' => array(
                     'title' => 'User Info',
                     'call' => 'user_info'
                 ),
             );
+
 
             $noshow_pages = array(
                 'recipecan_create_account' => array(
@@ -38,8 +46,12 @@ class RecipeCan_Binders_Admin extends RecipeCan_Binders_Abstract {
                     'call' => 'login'
                 ),
                 'recipecan_recipe' => array(
-                    'title' => 'Edit Recipe',
+                    'title' => 'Recipe',
                     'call' => 'recipe'
+                ),
+                'recipecan_edit_recipe' => array(
+                    'title' => 'Recipe',
+                    'call' => 'edit_recipe'
                 ),
                 'recipecan_recipe_photo' => array(
                     'title' => 'Recipe Photo',
@@ -191,7 +203,63 @@ class RecipeCan_Binders_Admin extends RecipeCan_Binders_Abstract {
         }
     }
 
-    public function recipe() {
+    public function new_recipe() {
+        if (!$this->has_required_settings()) {
+            $this->setup();
+        } else {
+            $this->view->render('admin/recipes/new');
+        }
+    }
+
+    /**
+     * Does 2 round trips - change to 1
+     *
+     * First is to post the recipe, just text+validation
+     * Second is to upload the photo.
+     */
+    public function recipes_post() {
+        $data = $this->request('recipe');
+
+        $this->api->create_recipe($data);
+
+        if ($this->api->failed()) {
+            $this->view->set('error', $this->api->response['error']);
+
+            // set view from request
+            $view_data = $this->request('recipe');
+            $this->view->set_data('recipe', $view_data);
+
+            $this->view->render('admin/recipes/new');
+        } else {
+            // save the recipe locally
+            $recipes = $this->make_recipes();
+            $recipes->save($this->api->response['recipe']);
+
+            // create a post
+            $recipecan_id = $this->api->response['recipe']['recipecan_id'];
+            $recipe = $recipes->find(array('recipecan_id' => $recipecan_id));
+            $recipe->tie_to_post();
+
+            // upload photo if the user submitted one
+            if (isset($_FILES['photo'])) {
+                $this->api->create_recipe_photo(array(
+                    'recipe_id' => $recipecan_id,
+                    'filename' => $_FILES['photo']['tmp_name']
+                ));
+
+                if ($this->api->success()) {
+                    // save the photo urls
+                    $recipes->save($this->api->response['recipe'], array('id' => $recipe->data['id']));
+                }
+            }
+
+            // show saved
+            $this->view->set('saved', true);
+            $this->view->render('admin/recipes/saved');
+        }
+    }
+
+    public function edit_recipe() {
         $recipes = $this->make_recipes();
         $recipe = $recipes->find_by_id($this->request('id'));
 
@@ -199,7 +267,7 @@ class RecipeCan_Binders_Admin extends RecipeCan_Binders_Abstract {
             $this->view->set('message', 'Recipe not found.');
             $this->view->render('admin/error');
         } else {
-            $this->view->set_data('recipe', $recipe);
+            $this->view->set_data('recipe', $recipe->data);
             $this->view->render('admin/recipes/edit');
         }
     }

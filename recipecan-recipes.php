@@ -17,7 +17,7 @@ $recipecan_options = array(
     'path' => dirname(__FILE__),
     'request' => $_REQUEST,
     'api_server' => 'www.recipecan.dev',
-    'imgage_server' => 'www.recipecan.dev',
+    'image_server' => 'www.recipecan.dev',
     'api_version' => 'v1',
     'prefix' => 'recipecan_',
     'register_global_names' => array('recipes', 'myrecipes', 'recipecan')
@@ -30,6 +30,7 @@ require_once $recipecan_options['path'] . '/binders/recipes.php';
 
 if (is_admin()) {
     require_once $recipecan_options['path'] . '/binders/admin.php';
+    require_once $recipecan_options['path'] . '/binders/editor.php';
 }
 
 

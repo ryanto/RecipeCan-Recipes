@@ -92,6 +92,12 @@ class RecipeCan_Api extends RecipeCan_Abstract {
         ));
     }
 
+    public function create_recipe($args) {
+        return $this->call('post', 'recipes', array(
+           'recipe' => $args
+        ));
+    }
+
     public function create_recipe_photo($args) {
 
         $handle = fopen($args['filename'], "rb");

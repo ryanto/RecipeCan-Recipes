@@ -1,0 +1,17 @@
+<div>
+    <?php foreach ($this->get('recipes') as $recipe) { ?>
+
+        <h2><a href="<?php $this->p(get_permalink($recipe['post_id'])) ?>"><?php echo $recipe['name']; ?></a></h2>
+        <div>
+            <div>
+                <img src="http://<?php $this->p($this->options['image_server']); ?><?php $this->p($recipe['photo_small']); ?>"
+                     alt="<?php $this->p($recipe['name']) ?> Recipe"
+                     height="100" width="100" />
+            </div>
+            <div>
+                <?php $this->p($recipe['tag_list']); ?>
+            </div>
+        </div>
+
+    <?php } ?>
+</div>
