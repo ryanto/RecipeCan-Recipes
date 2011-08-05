@@ -33,6 +33,10 @@ class RecipeCan_Row_Recipe extends RecipeCan_Row_Abstract {
 
     }
 
+    public function safe_name() {
+        return str_replace("\"", "", $this->get('name'));
+    }
+
     public function link() {
         return get_permalink($this->data['post_id']);
     }

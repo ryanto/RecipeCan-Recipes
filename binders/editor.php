@@ -9,6 +9,12 @@ class RecipeCan_Binders_Editor extends RecipeCan_Binders_Abstract {
         add_filter('mce_buttons', array(&$this, 'button'));
 
         add_action('wp_ajax_recipecan', array(&$this, 'select_recipe'));
+        add_action('wp_ajax_recipecan_create_recipe', array(&$this, 'create_recipe'));
+        add_action('init', array(&$this, 'form_plugin'));
+    }
+
+    public function form_plugin() {
+        wp_enqueue_script('jquery-form');
     }
 
     public function plugin($plugins) {
@@ -26,6 +32,50 @@ class RecipeCan_Binders_Editor extends RecipeCan_Binders_Abstract {
 
         $this->view->set('recipes', $recipes->all_data());
         $this->view->render('editor/index');
+        die();
+    }
+
+    public function create_recipe() {
+
+        $data = $this->request('recipe');
+
+        $this->api->create_recipe($data);
+
+        if ($this->api->failed()) {
+            $this->view->set('error', $this->api->response['error']);
+
+            // set view from request
+            $view_data = $this->request('recipe');
+            $this->view->set_data('recipe', $view_data);
+
+            $this->view->render('admin/recipes/ajax/new');
+        } else {
+            // save the recipe locally
+            $recipes = $this->make_recipes();
+            $recipes->save($this->api->response['recipe']);
+
+            // create a post
+            $recipecan_id = $this->api->response['recipe']['recipecan_id'];
+            $recipe = $recipes->find(array('recipecan_id' => $recipecan_id));
+            $recipe->tie_to_post();
+
+            // upload photo if the user submitted one
+            if (isset($_FILES['photo']['tmp_name'])) {
+                $this->api->create_recipe_photo(array(
+                    'recipe_id' => $recipecan_id,
+                    'filename' => $_FILES['photo']['tmp_name']
+                ));
+
+                if ($this->api->success()) {
+                    // save the photo urls
+                    $recipes->save($this->api->response['recipe'], array('id' => $recipe->data['id']));
+                }
+            }
+
+            $this->view->set('recipe', $recipe);
+            $this->view->render('admin/recipes/ajax/saved');
+        }
+
         die();
     }
 

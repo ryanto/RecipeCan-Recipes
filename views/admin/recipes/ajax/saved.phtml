@@ -1,0 +1,10 @@
+<h2>Saved</h2>
+
+<p>
+    Your recipe has been saved.
+</p>
+
+<script>
+tinyMCE.activeEditor.execCommand('mceInsertContent', 0, "[your-recipe-will-show-here \"<?php echo $this->get('recipe')->safe_name(); ?>\" <?php echo $this->get('recipe')->get('id'); ?>]");
+tb_remove();
+</script>

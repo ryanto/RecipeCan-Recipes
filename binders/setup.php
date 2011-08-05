@@ -13,7 +13,6 @@ class RecipeCan_Binders_Setup extends RecipeCan_Binders_Abstract {
         $recipes->ensure_table();
     }
 
-    
 
     public function post_type() {
         $labels = array(
@@ -47,32 +46,6 @@ class RecipeCan_Binders_Setup extends RecipeCan_Binders_Abstract {
         );
 
         register_post_type($this->get_post_type_name(), $args);
-
-        /*
-        $labels = array(
-            'name' => 'Genres',
-            'singular_name' => 'Genre', 'taxonomy singular name',
-            'search_items' => 'Search Genres',
-            'all_items' => 'All Genres',
-            'parent_item' => 'Parent Genre',
-            'parent_item_colon' => 'Parent Genre:',
-            'edit_item' => 'Edit Genre',
-            'update_item' => 'Update Genre',
-            'add_new_item' => 'Add New Genre',
-            'new_item_name' => 'New Genre Name',
-            'menu_name' => 'Genre',
-        );
-
-        register_taxonomy(
-                $this->options['prefix'] . '_taxonomy_recipe_id',
-                $this->get_post_type_name(),
-                array(
-                    'hierarchical' => false,
-                    'labels' => $labels,
-                    'public' => true
-                )
-        );
-        */
 
         flush_rewrite_rules();
     }

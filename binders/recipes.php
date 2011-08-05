@@ -8,7 +8,9 @@ class RecipeCan_Binders_Recipes extends RecipeCan_Binders_Abstract {
         //add_filter('single_template', array(&$this, 'template'));
         //add_filter('archive_template', array(&$this, 'archive'));
         add_shortcode('recipecan-list-recipes', array(&$this, 'list_recipes'));
-        add_filter('the_content', array(&$this, 'content'));
+        add_shortcode('recipecan-show-recipe', array(&$this, 'insert'));
+        add_shortcode('your-recipe-will-show-here', array(&$this, 'insert'));
+        add_filter('the_content', array(&$this, 'page'));
     }
 
     public function template($single_template) {
@@ -32,7 +34,15 @@ class RecipeCan_Binders_Recipes extends RecipeCan_Binders_Abstract {
         $this->view->render('recipes/index');
     }
 
-    public function content($content) {
+    public function insert($attrs) {
+        $recipes = $this->make_recipes();
+        $recipe = $recipes->find(array('id' => $attrs[1]));
+
+        $this->view->set('recipe', $recipe);
+        $this->view->render('recipes/insert');
+    }
+
+    public function page($content) {
         global $post;
 
         if (isset($post) && $post->post_type == $this->get_option('post_type_name')) {
@@ -40,12 +50,11 @@ class RecipeCan_Binders_Recipes extends RecipeCan_Binders_Abstract {
             $recipe = $recipes->find(array('post_id' => $post->ID));
 
             $this->view->set('recipe', $recipe);
-            $this->view->render('recipes/show');
+            $this->view->render('recipes/page');
         } else {
             return $content;
         }
     }
-    
 
 }
 

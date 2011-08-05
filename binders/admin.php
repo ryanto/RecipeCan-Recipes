@@ -241,7 +241,7 @@ class RecipeCan_Binders_Admin extends RecipeCan_Binders_Abstract {
             $recipe->tie_to_post();
 
             // upload photo if the user submitted one
-            if (isset($_FILES['photo'])) {
+            if (isset($_FILES['photo']['tmp_name'])) {
                 $this->api->create_recipe_photo(array(
                     'recipe_id' => $recipecan_id,
                     'filename' => $_FILES['photo']['tmp_name']

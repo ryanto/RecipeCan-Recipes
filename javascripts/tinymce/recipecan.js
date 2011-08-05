@@ -7,8 +7,9 @@
             var root_url = url + "/../..";
 
             ed.addCommand('add_recipe', function() {
-                tb_show("Insert Recipe", "admin-ajax.php?action=recipecan&height=300&width=300");
-                //tb_show("Insert Recipe", "admin-ajax.php?action=recipecan&height=300&width=300");
+                //jQuery('#add_recipe').click();
+                tb_show("Insert Recipe", "admin-ajax.php?action=recipecan");
+            //tb_show("Insert Recipe", "admin-ajax.php?action=recipecan&height=300&width=300");
             });
 
             ed.addButton('recipecan', {
@@ -34,6 +35,18 @@
     });
 
     jQuery(document).ready(function() {
+
+        jQuery('#recipecan_add_new_recipe a').live('click', function() {
+            jQuery('#recipecan_add_new_recipe').toggle();
+            jQuery('#recipecan_add_new_recipe_box').toggle();
+            jQuery('#recipecan_insert_existing_recipe_box').toggle();
+
+            jQuery("#TB_ajaxContent").css("width", "auto");
+            jQuery("#TB_ajaxContent").css("height", jQuery('#TB_window').height() - 50);
+
+            return false;
+        });
+
         jQuery('.recipecan_insert_recipe').live('click', function() {
             var shortcode = '[your-recipe-will-show-here "' + jQuery(this).data('recipe-name') + '" ' + jQuery(this).data('recipe-id') + ']';
 
@@ -42,6 +55,27 @@
 
             return false;
         });
+
+        jQuery('#recipecan_new_recipe_form').live('submit', function() {
+
+            var form = jQuery(this);
+            
+            jQuery("#recipecan_loading").show();
+            jQuery("#recipecan_form_wrapper").hide();
+
+            jQuery(form).ajaxSubmit({
+                target: '#recipecan_form_submit_div',
+                iframe: true,
+                success: function(response, textStatus, xhr) {
+                    jQuery("#TB_ajaxContent").css("width", "auto");
+                    jQuery("#TB_ajaxContent").css("height", jQuery('#TB_window').height() - 50);
+                }
+
+            });
+
+            return false;
+        });
+
     })
 
     tinymce.PluginManager.add('recipecan', tinymce.plugins.Recipecan);

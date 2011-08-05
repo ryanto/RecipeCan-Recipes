@@ -1,0 +1,26 @@
+<?php $recipe = $this->get('recipe'); ?>
+
+<div>
+    <div>
+        <img src="<?php $this->p($recipe->image()); ?>"
+             alt="<?php $this->p($recipe->get('name')); ?> Recipe"
+             />
+    </div>
+
+    <div>
+        <?php $this->p($recipe->get('tag_list')); ?>
+    </div>
+
+    <div>
+        <?php foreach($recipe->ingredients() as $ingredient) { ?>
+            <li><?php $this->p($ingredient); ?></li>
+        <?php } ?>
+    </div>
+
+    <div>
+        <?php foreach($recipe->directions() as $direction) { ?>
+            <li><?php $this->p($direction); ?></li>
+        <?php } ?>
+    </div>
+
+</div>
