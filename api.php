@@ -8,33 +8,35 @@ class RecipeCan_Api extends RecipeCan_Abstract {
 
     public function call($verb, $url, $args = array(), $headers = array()) {
 
+        $debug = true;
+
         $api_key = $this->get_option('single_access_token');
 
-        /*
-        echo "<b>request</b><br/>";
-        //var_dump($args);
-        echo "<br/><br/>";
-        */
+        if ($debug) {
+            echo "<b>request</b><br/>";
+            var_dump($args);
+            echo "<br/><br/>";
+        }
+
         $request_url = 'http://' . $this->options['api_server'] . '/api/' .
                 $this->options['api_version'] . '/' . $url . '.js';
 
         if ($api_key != '') {
             $request_url .= '?user_credentials=' . $api_key;
 
-            /*
-            echo "<b>api key</b><br>";
-            var_dump($api_key);
-            echo "<br><br>";
-             *
-             */
+            if ($debug) {
+                echo "<b>api key</b><br>";
+                var_dump($api_key);
+                echo "<br><br>";
+            }
+            
         }
 
-        /*
-        echo "<b>request url</b><br>";
-        echo $request_url;
-        echo "<br><br>";
-         *
-         */
+        if ($debug) {
+            echo "<b>request url</b><br>";
+            echo $request_url;
+            echo "<br><br>";
+        }
 
         $wp_remote_args = array(
             'headers' => $headers,
@@ -46,21 +48,19 @@ class RecipeCan_Api extends RecipeCan_Abstract {
 
         $response = wp_remote_request($request_url, $wp_remote_args);
 
-        /*
-        echo "<b>raw response</b><br/>";
-        var_dump($response['body']);
-        echo "<br/><br/>";
-         *
-         */
+        if ($debug) {
+            echo "<b>raw response</b><br/>";
+            var_dump($response['body']);
+            echo "<br/><br/>";
+        }
 
         $json_as_array = Zend_Json::decode($response['body']);
 
-        /*
-        echo "<b>processed response</b><br/>";
-        var_dump($json_as_array);
-        echo "<br/><br>";
-         * 
-         */
+        if ($debug) {
+            echo "<b>processed response</b><br/>";
+            var_dump($json_as_array);
+            echo "<br/><br>";
+        }
 
         $this->response = $json_as_array;
         return $json_as_array;
@@ -68,6 +68,14 @@ class RecipeCan_Api extends RecipeCan_Abstract {
 
     public function failed() {
         return array_key_exists('failed', $this->response);
+    }
+
+    public function errors() {
+        if ($this->failed()) {
+            return $this->response['error'];
+        } else {
+            return null;
+        }
     }
 
     public function success() {

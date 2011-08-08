@@ -6,7 +6,13 @@ class RecipeCan_View {
     public $options;
 
     public function render($file) {
+        echo $this->read($file);
+    }
+
+    public function read($file) {
+        ob_start();
         require $this->options['path'] . '/views/' . $file . '.phtml';
+        return ob_get_clean();
     }
 
     public function set($name, $value) {
@@ -31,6 +37,8 @@ class RecipeCan_View {
     public function p($str) {
         echo htmlentities($str);
     }
+
+    
 
 
 }

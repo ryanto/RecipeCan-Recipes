@@ -109,12 +109,16 @@ class RecipeCan_Binders_Admin extends RecipeCan_Binders_Abstract {
 
         if ($this->api->failed()) {
             // failed
-            $this->view->set('error', $this->api->response['message']);
+            $this->view->set('error', $this->api->errors());
             $this->view->render('admin/setup/login');
         } else {
             // it worked
             // log the token to the settings table
-            $this->add_option('single_access_token', $this->api->response['single_access_token']);
+            if ($this->get_option('single_access_token') === false) {
+                $this->add_option('single_access_token', $this->api->response['user']['single_access_token']);
+            } else {
+                $this->update_option('single_access_token', $this->api->response['user']['single_access_token']);
+            }
             $this->view->render('admin/setup/complete');
         }
     }

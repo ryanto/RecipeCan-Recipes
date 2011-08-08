@@ -4,13 +4,7 @@
     To login to your RecipeCan account just enter your details below.
 </p>
 
-<?php if ($this->get('error') != '') { ?>
-    <b>Error</b>
-    <div>
-        <?php echo $this->get('error') ?>
-    </div>
-    <br />
-<?php } ?>
+<?php $this->render('shared/_form_errors'); ?>
 
 <form method="post" action="?page=recipecan_login">
     <input type="hidden" name="method" value="post">
@@ -28,7 +22,7 @@
     </ul>
     
 
-    <input class="button-primary" type="submit" name="Save" value="<?php _e("Login"); ?>" id="submitbutton" />
+    <input class="button-primary" type="submit" name="Save" value="Login" id="submitbutton" />
 
 
 </form>

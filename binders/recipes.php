@@ -37,7 +37,7 @@ class RecipeCan_Binders_Recipes extends RecipeCan_Binders_Abstract {
     public function list_recipes() {
         $recipes = $this->make_recipes();
         $this->view->set('recipes', $recipes->all());
-        $this->view->render('recipes/index');
+        return $this->view->read('recipes/index');
     }
 
     public function insert($attrs) {
@@ -45,7 +45,7 @@ class RecipeCan_Binders_Recipes extends RecipeCan_Binders_Abstract {
         $recipe = $recipes->find(array('id' => $attrs[1]));
 
         $this->view->set('recipe', $recipe);
-        $this->view->render('recipes/insert');
+        return $this->view->read('recipes/insert');
     }
 
     public function page($content) {
@@ -56,7 +56,7 @@ class RecipeCan_Binders_Recipes extends RecipeCan_Binders_Abstract {
             $recipe = $recipes->find(array('post_id' => $post->ID));
 
             $this->view->set('recipe', $recipe);
-            $this->view->render('recipes/page');
+            return $this->view->render('recipes/page');
         } else {
             return $content;
         }

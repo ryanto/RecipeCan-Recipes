@@ -17,9 +17,15 @@ abstract class RecipeCan_Abstract {
         add_option($this->options['prefix'] . $name, $value);
     }
 
+    public function update_option($name, $value) {
+        return update_option($this->options['prefix'] . $name, $value);
+    }
+
     public function get_option($name) {
         return get_option($this->options['prefix'] . $name);
     }
+
+
 
     public function get_post_type_name() {
         $option = $this->get_option('post_type_name');
