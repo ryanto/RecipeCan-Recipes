@@ -1,30 +1,21 @@
 
-<div id="recipecan_loading" style="display:none;">
-    Saving Recipe.  This could take a minute, especially if you are uploading
-    a photo.
+<div id="recipecan_loading" style="display: none;">
+
+    <div class="recipecan_spinner">
+        <img src="<?php echo $this->options['plugin_url']; ?>/images/loading.gif" />
+    </div>
+    <div class="recipecan_text">
+        Saving Recipe.  This could take a minute, especially if you are uploading
+        a photo.
+    </div>
+
+    <br class="recipecan_clean" />
 </div>
 
 <div id="recipecan_form_wrapper">
-    <?php if ($this->get('error')) { ?>
+    <?php $this->render('shared/_form_errors'); ?>
 
-        <h3>Errors</h3>
-        <?php foreach ($this->get('error') as $field => $errors) { ?>
-            <?php foreach ($errors as $error) { ?>
-                <?php echo ucfirst($field); ?> <?php echo $error; ?>.<br />
-            <?php } ?>
-        <?php } ?>
-
-    <?php } ?>
-
-    <?php
-        if ($this->get('ajax_submit') == true) {
-            $form_post_url = "admin-ajax.php?action=recipecan_create_recipe";
-        } else {
-            $form_post_url = "?page=recipecan_recipes&method=post";
-        }
-    ?>
-
-    <form method="post" action="<?php echo $form_post_url; ?>" enctype="multipart/form-data" id="recipecan_new_recipe_form">
+    <form method="post" action="<?php echo $this->get('form_submit_url'); ?>" enctype="multipart/form-data" id="recipecan_new_recipe_form">
 
         <ul>
             <li>
@@ -92,18 +83,20 @@
 
             <li>
                 <label for="ingredients">Ingredients:</label><br />
-                <textarea id="ingredients" name="recipe[ingredients]" cols="40" rows="12"><?php echo $this->get('recipe[ingredients]'); ?></textarea>
+                <textarea id="ingredients" name="recipe[ingredients]" cols="60" rows="8"><?php echo $this->get('recipe[ingredients]'); ?></textarea>
             </li>
 
             <li>
                 <label for="directions">Directions:</label><br />
-                <textarea id="ingredients" name="recipe[directions]" cols="40" rows="12"><?php echo $this->get('recipe[directions]'); ?></textarea>
+                <textarea id="ingredients" name="recipe[directions]" cols="60" rows="12"><?php echo $this->get('recipe[directions]'); ?></textarea>
             </li>
 
-            <li>
-                <label  for="photo">Photo</label><br />
-                <input type="file" id="photo" name="photo" /><br/>
-            </li>
+            <?php if ($this->get('form_photo')) { ?>
+                <li>
+                    <label  for="photo">Photo</label><br />
+                    <input type="file" id="photo" name="photo" /><br/>
+                </li>
+            <?php } ?>
 
         </ul>
 

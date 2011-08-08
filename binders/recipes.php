@@ -11,13 +11,19 @@ class RecipeCan_Binders_Recipes extends RecipeCan_Binders_Abstract {
         add_shortcode('recipecan-show-recipe', array(&$this, 'insert'));
         add_shortcode('your-recipe-will-show-here', array(&$this, 'insert'));
         add_filter('the_content', array(&$this, 'page'));
+        add_action('init', array(&$this, 'stylesheet'));
+    }
+
+    public function stylesheet() {
+        $stylesheet = $this->options['plugin_url'] . '/stylesheets/recipecan.css';
+        wp_register_style('recipecan', $stylesheet);
+        wp_enqueue_style('recipecan');
     }
 
     public function template($single_template) {
         global $post;
 
         if ($post->post_type == $this->get_option('post_type_name')) {
-            var_dump('RECIPECAN PAGE FOUND');
             $single_template = $this->options['path'] . '/templates/recipe-post-type-template.php';
         }
         //return $single_template;
@@ -30,7 +36,7 @@ class RecipeCan_Binders_Recipes extends RecipeCan_Binders_Abstract {
 
     public function list_recipes() {
         $recipes = $this->make_recipes();
-        $this->view->set('recipes', $recipes->all_data());
+        $this->view->set('recipes', $recipes->all());
         $this->view->render('recipes/index');
     }
 

@@ -10,24 +10,31 @@ class RecipeCan_Api extends RecipeCan_Abstract {
 
         $api_key = $this->get_option('single_access_token');
 
+        /*
         echo "<b>request</b><br/>";
         //var_dump($args);
         echo "<br/><br/>";
-
+        */
         $request_url = 'http://' . $this->options['api_server'] . '/api/' .
                 $this->options['api_version'] . '/' . $url . '.js';
 
         if ($api_key != '') {
             $request_url .= '?user_credentials=' . $api_key;
 
+            /*
             echo "<b>api key</b><br>";
             var_dump($api_key);
             echo "<br><br>";
+             *
+             */
         }
 
+        /*
         echo "<b>request url</b><br>";
         echo $request_url;
         echo "<br><br>";
+         *
+         */
 
         $wp_remote_args = array(
             'headers' => $headers,
@@ -39,16 +46,21 @@ class RecipeCan_Api extends RecipeCan_Abstract {
 
         $response = wp_remote_request($request_url, $wp_remote_args);
 
-
+        /*
         echo "<b>raw response</b><br/>";
         var_dump($response['body']);
         echo "<br/><br/>";
+         *
+         */
 
         $json_as_array = Zend_Json::decode($response['body']);
 
+        /*
         echo "<b>processed response</b><br/>";
         var_dump($json_as_array);
         echo "<br/><br>";
+         * 
+         */
 
         $this->response = $json_as_array;
         return $json_as_array;

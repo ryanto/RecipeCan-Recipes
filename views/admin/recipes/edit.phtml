@@ -2,116 +2,31 @@
 
 <h2>Edit <?php echo $recipe['name']; ?></h2>
 
-<?php if ($this->get('error')) { ?>
+<div id="recipecan_edit_recipe">
+    <div class="recipecan_form">
+        <?php
+            $this->set('form_submit_url', '?page=recipecan_recipe&id=' . $recipe['id'] . '&method=put');
+            $this->set('form_photo', false);
+            $this->render('admin/recipes/_form');
+        ?>
+    </div>
 
-    <h3>Errors</h3>
-    <?php foreach ($this->get('error') as $field => $errors) { ?>
-        <?php foreach ($errors as $error) { ?>
-            <?php echo ucfirst($field); ?> <?php echo $error; ?>.<br />
+    <div class="recipecan_photo">
+        <?php if ($recipe['photo_large'] != '') { ?>
+            <div>
+                <a href="?page=recipecan_recipe_photo&id=<?php echo $recipe['id'] ?>">Change Photo</a>
+            </div>
+            <div>
+                <img src="http://<?php echo $this->options['image_server']; ?><?php echo $recipe['photo_large']; ?>" alt="Recipe Photo" />
+            </div>
+        <?php } else { ?>
+            <div>
+                There is no photo for this recipe.
+            </div>
+            <div>
+                <a href="?page=recipecan_recipe_photo&id=<?php echo $recipe['id'] ?>">Add Photo</a>
+            </div>
         <?php } ?>
-    <?php } ?>
-
-<?php } ?>
-
-
-<form method="post" action="?page=recipecan_recipe&id=<?php echo $recipe['id']; ?>&method=put">
-
-    <ul>
-        <li>
-            <label for="name">Name:</label><br />
-            <input name="recipe[name]" id="name" value="<?php echo $this->get('recipe[name]'); ?>" size="32" />
-        </li>
-
-        <li>
-            <label for="course">Course:</label><br />
-            <select id="course" name="recipe[course]">
-                <option value=""></option>
-                <?php $courses = array(
-                    "Breakfast", "Lunch", "Snack", "Appetizer", "Dinner", "Side",
-                    "Drink", "Dessert"
-                );
-                foreach ($courses as $course) {
-                    if ($course == $this->get('recipe[course]')) {
-                        $selected = "selected";
-                    } else {
-                        $selected = "";
-                    } ?>
-                    <option value="<?php echo $course; ?>" <?php echo $selected; ?>><?php echo $course; ?></option>
-                <?php } ?>
-
-            </select>
-        </li>
-
-        <li>
-            <label for="cuisine">Cuisine:</label><br />
-            <select id="cuisine" name="recipe[cuisine]">
-                <option value=""></option>
-                <?php $cuisines = array(
-                    "American", "Cajun", "Chinese", "Cuban", "English", "Filipino",
-                    "French", "German", "Greek", "Indian", "Irish", "Italian",
-                    "Japanese", "Jewish", "Korean", "Mediterranean", "Mexican",
-                    "Middle-Eastern", "Moroccan", "Polish", "Russian", "Southern",
-                    "Spanish", "Thai", "Vietnamese"
-                );
-                foreach ($cuisines as $cuisine) {
-                    if ($cuisine == $this->get('recipe[cuisine]')) {
-                        $selected = "selected";
-                    } else {
-                        $selected = "";
-                    } ?>
-                    <option value="<?php echo $cuisine; ?>" <?php echo $selected; ?>><?php echo $cuisine; ?></option>
-                <?php } ?>
-                
-            </select>
-        </li>
-
-        <li>
-            <label for="make_time">Time to make:</label><br />
-            <input name="recipe[make_time]" id="make_time" value="<?php echo $this->get('recipe[make_time]'); ?>" size="18" />
-        </li>
-
-        <li>
-            <label for="servings">Servings:</label><br />
-            <input name="recipe[servings]" id="servings" value="<?php echo $this->get('recipe[servings]'); ?>" size="18" />
-        </li>
-
-        <li>
-            <label for="tag_list">Tags:</label><br />
-            <input name="recipe[tag_list]" id="tag_list" value="<?php echo $this->get('recipe[tag_list]'); ?>" size="48" />
-        </li>
-
-        <li>
-            <label for="ingredients">Ingredients:</label><br />
-            <textarea id="ingredients" name="recipe[ingredients]" cols="40" rows="12"><?php echo $this->get('recipe[ingredients]'); ?></textarea>
-        </li>
-
-        <li>
-            <label for="directions">Directions:</label><br />
-            <textarea id="ingredients" name="recipe[directions]" cols="40" rows="12"><?php echo $this->get('recipe[directions]'); ?></textarea>
-        </li>
-
-    </ul>
-
-    <input class="button-primary" type="submit" name="Save" value="Update Recipe" id="submitbutton" />
-
-</form>
-
-
-<div>
-    <h3>Photo</h3>
-    <?php if ($recipe['photo_large']) { ?>
-        <div>
-            <img src="http://<?php echo $this->options['imgage_server']; ?><?php echo $recipe['photo_small']; ?>" alt="Recipe Photo" />
-        </div>
-        <div>
-            <a href="?page=recipecan_recipe_photo&id=<?php echo $recipe['id'] ?>">Change Photo</a>
-        </div>
-    <?php } else { ?>
-        <div>
-            There is no photo for this recipe.
-        </div>
-        <div>
-            <a href="?page=recipecan_recipe_photo&id=<?php echo $recipe['id'] ?>">Add Photo</a>
-        </div>
-    <?php } ?>
+    </div>
+    
 </div>

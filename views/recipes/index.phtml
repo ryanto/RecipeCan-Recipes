@@ -1,17 +1,32 @@
-<div>
+<div id="recipecan_list_recipes">
     <?php foreach ($this->get('recipes') as $recipe) { ?>
+        <div class="recipecan_recipe">
+            
+            <div>
 
-        <h2><a href="<?php $this->p(get_permalink($recipe['post_id'])) ?>"><?php echo $recipe['name']; ?></a></h2>
-        <div>
-            <div>
-                <img src="http://<?php $this->p($this->options['image_server']); ?><?php $this->p($recipe['photo_small']); ?>"
-                     alt="<?php $this->p($recipe['name']) ?> Recipe"
-                     height="100" width="100" />
+                <?php if ($recipe->has_image()) { ?>
+                    <div class="recipecan_image">
+                        <img src="http://<?php $this->p($this->options['image_server']); ?><?php $this->p($recipe->get('photo_small')); ?>"
+                             alt="<?php $this->p($recipe->get('name')); ?> Recipe"
+                             height="100" width="100" />
+                    </div>
+                <?php } ?>
+
+
+                <div class="recipecan_info">
+                    <div class="recipecan_title">
+                        <h2><a href="<?php $this->p($recipe->link()); ?>"><?php $this->p($recipe->get('name')); ?></a></h2>
+                    </div>
+
+                    <div class="recipecan_tags">
+                        <?php $this->p($recipe->get('tag_list')); ?>
+                    </div>
+                </div>
+
+                <br class="recipecan_clear" />
+                
             </div>
-            <div>
-                <?php $this->p($recipe['tag_list']); ?>
-            </div>
+
         </div>
-
     <?php } ?>
 </div>

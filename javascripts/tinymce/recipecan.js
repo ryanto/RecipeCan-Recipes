@@ -7,9 +7,7 @@
             var root_url = url + "/../..";
 
             ed.addCommand('add_recipe', function() {
-                //jQuery('#add_recipe').click();
                 tb_show("Insert Recipe", "admin-ajax.php?action=recipecan");
-            //tb_show("Insert Recipe", "admin-ajax.php?action=recipecan&height=300&width=300");
             });
 
             ed.addButton('recipecan', {

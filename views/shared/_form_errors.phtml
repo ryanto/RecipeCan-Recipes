@@ -1,0 +1,13 @@
+<?php if ($this->get('error')) { ?>
+<div id="recipecan_form_errors">
+    <h3>Opps!</h3>
+    <?php foreach ($this->get('error') as $field => $errors) { ?>
+        <?php foreach ($errors as $error) { ?>
+            <span class="recipecan_field">
+                <?php echo ucfirst($field); ?>
+            </span>
+            <?php echo $error; ?>.<br />
+        <?php } ?>
+    <?php } ?>
+</div>
+<?php } ?>

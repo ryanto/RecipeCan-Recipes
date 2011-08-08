@@ -41,6 +41,10 @@ class RecipeCan_Row_Recipe extends RecipeCan_Row_Abstract {
         return get_permalink($this->data['post_id']);
     }
 
+    public function has_image() {
+        return ($this->get('photo_large') != '');
+    }
+
     public function image($size = 'large') {
         return "http://" . $this->options['image_server'] . $this->get('photo_' . $size);
     }

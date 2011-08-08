@@ -23,11 +23,11 @@ class RecipeCan_Binders_Admin extends RecipeCan_Binders_Abstract {
                     'call' => 'new_recipe'
                 ),
                 /*
-                'recipecan_settings' => array(
-                    'title' => 'Settings',
-                    'call' => 'settings'
-                ),
-                 * 
+                  'recipecan_settings' => array(
+                  'title' => 'Settings',
+                  'call' => 'settings'
+                  ),
+                 *
                  */
                 'recipecan_user_info' => array(
                     'title' => 'User Info',
@@ -187,6 +187,8 @@ class RecipeCan_Binders_Admin extends RecipeCan_Binders_Abstract {
             $this->setup();
         } else {
             $this->api->user();
+            $this->view->set('user', $this->api->response);
+            $this->view->render('admin/user/index');
         }
     }
 
@@ -198,7 +200,7 @@ class RecipeCan_Binders_Admin extends RecipeCan_Binders_Abstract {
 
             $recipes->download_recipes();
 
-            $this->view->set('recipes', $recipes->all_data());
+            $this->view->set('recipes', $recipes->all());
             $this->view->render('admin/recipes/index');
         }
     }
@@ -277,7 +279,7 @@ class RecipeCan_Binders_Admin extends RecipeCan_Binders_Abstract {
         $recipe = $recipes->find_by_id($this->request('id'));
 
         $data = $this->request('recipe');
-        $data['id'] = $recipe['recipecan_id'];
+        $data['id'] = $recipe->get('recipecan_id');
 
         // try to save via api
         $this->api->update_recipe($data);
@@ -288,7 +290,7 @@ class RecipeCan_Binders_Admin extends RecipeCan_Binders_Abstract {
             // set view from request
             $view_data = $this->request('recipe');
             $view_data['id'] = $this->request('id');
-            $this->view->set_data('recipe', $view_data);
+            $this->view->set_data('recipe', array_merge($recipe->data, $view_data));
 
             $this->view->render('admin/recipes/edit');
         } else {
@@ -312,12 +314,13 @@ class RecipeCan_Binders_Admin extends RecipeCan_Binders_Abstract {
     }
 
     public function recipe_photo_post() {
+
         $recipes = $this->make_recipes();
         $recipe = $recipes->find_by_id($this->request('id'));
 
         $this->api->create_recipe_photo(array(
-            'recipe_id' => $recipe['recipecan_id'],
-            'filename' => $_FILES['file']['tmp_name']
+            'recipe_id' => $recipe->get('recipecan_id'),
+            'filename' => $_FILES['recipecan_file']['tmp_name']
         ));
 
         $this->view->set_data('recipe', $recipe);
@@ -326,7 +329,11 @@ class RecipeCan_Binders_Admin extends RecipeCan_Binders_Abstract {
             $this->view->set('error', $this->api->response['error']);
             $this->view->render('admin/recipe_photo/show');
         } else {
+            // save
             $recipes->save($this->api->response['recipe'], array('id' => $this->request('id')));
+            // reload
+            $recipe = $recipes->find_by_id($this->request('id'));
+            
             $this->view->set('saved', true);
             $this->view->render('admin/recipe_photo/show');
         }

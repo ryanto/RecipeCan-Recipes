@@ -1,5 +1,15 @@
 <h2>Add a new Recipe</h2>
 
-<?php $this->render('admin/recipes/_form'); ?>
+<?php
+    $this->set('form_submit_url', '?page=recipecan_recipes&method=post');
+    $this->set('form_photo', true);
+    $this->render('admin/recipes/_form');
+?>
+
+<script>
+    jQuery('#recipecan_new_recipe_form').submit(function () {
+        jQuery('#recipecan_loading').show().css({paddingBottom: '10px'});
+    });
+</script>
 
 

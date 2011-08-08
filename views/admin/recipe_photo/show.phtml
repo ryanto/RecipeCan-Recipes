@@ -7,49 +7,52 @@
 <?php if ($this->get('saved')) { ?>
     
     <h3>Saved</h3>
-    <div>
-        Your new recipe photo has been uploaded and saved
-    </div>
+    <p>
+        Your new recipe photo has been uploaded and saved.
+    </p>
     
 <?php } ?>
-<?php if ($this->get('error')) { ?>
 
-    <h3>Errors</h3>
-    <?php foreach ($this->get('error') as $field => $errors) { ?>
-        <?php foreach ($errors as $error) { ?>
-            <?php echo ucfirst($field); ?> <?php echo $error; ?>.<br />
-        <?php } ?>
-    <?php } ?>
+<?php $this->render('shared/_form_errors'); ?>
 
-<?php } ?>
+<div id="recipecan_loading" style="display: none;">
 
-<div id="file_uploading" style="display: none;">
-    Your image file is uploading.  Please be patient as this process may take
-    a minute or two.
+    <div class="recipecan_spinner">
+        <img src="<?php echo $this->options['plugin_url']; ?>/images/loading.gif" />
+    </div>
+    <div class="recipecan_text">
+        Your image file is uploading.  Please be patient as this process may take
+        a minute or two.
+    </div>
+
+    <br class="recipecan_clean" />
 </div>
 
 <form 
-    id="file_upload_form"
-    action="?page=recipecan_recipe_photo&id=<?php echo $recipe['id']; ?>&method=post"
+    id="recipecan_file_upload_form"
+    action="?page=recipecan_recipe_photo&id=<?php echo $recipe->get('id'); ?>&method=post"
     method="post"
     enctype="multipart/form-data">
-    Select a Photo: <input type="file" name="file" id="file"><br/>
+    Select a Photo: <input type="file" name="recipecan_file" id="recipecan_file"><br/><br/>
 </form>
 
 <script>
     jQuery(document).ready(function() {
 
-        jQuery('#file').change(function() {
-            jQuery('#file_uploading').show();
-            jQuery('#file_upload_form').submit().hide();
+        jQuery('#recipecan_file').change(function() {
+            jQuery('#recipecan_loading').show().css({paddingBottom: '10px'});
+            setTimeout(function() {
+                jQuery('#recipecan_file_upload_form').submit().hide();
+            }, 5000);
         });
 
     });
 </script>
 
-<?php if ($recipe['photo_large']) { ?>
+<?php if ($recipe->get('photo_large')) { ?>
     <div>
-        <img src="http://<?php echo $this->options['imgage_server']; ?><?php echo $recipe['photo_large']; ?>" alt="Recipe Photo" />
+        <img src="http://<?php echo $this->options['image_server']; ?><?php echo $recipe->get('photo_large'); ?>"
+             alt="Recipe Photo" />
     </div>
 <?php } else { ?>
     <div>
