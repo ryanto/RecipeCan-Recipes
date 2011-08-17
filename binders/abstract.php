@@ -17,6 +17,11 @@ abstract class RecipeCan_Binders_Abstract extends RecipeCan_Abstract {
         $this->run();
     }
 
+    public function has_required_settings() {
+        $token = $this->get_option('single_access_token');
+        return ($token != '');
+    }
+
     public function request($var) {
         if (array_key_exists($var, $this->options['request'])) {
             return $this->options['request'][$var];

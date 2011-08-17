@@ -8,11 +8,6 @@ class RecipeCan_Binders_Admin extends RecipeCan_Binders_Abstract {
         add_action('admin_menu', array(&$this, 'admin_menu'));
     }
 
-    public function has_required_settings() {
-        $token = $this->get_option('single_access_token');
-        return ($token != '');
-    }
-
     public function admin_menu() {
 
         if (current_user_can('manage_options')) {
@@ -151,7 +146,7 @@ class RecipeCan_Binders_Admin extends RecipeCan_Binders_Abstract {
 
             if ($this->api->failed()) {
                 // if fail, reprint with set options
-                $this->view->set('errors', $this->api->response['errors']);
+                $this->view->set('error', $this->api->errors());
 
                 $forms = array(
                     'user' => array(
@@ -174,7 +169,11 @@ class RecipeCan_Binders_Admin extends RecipeCan_Binders_Abstract {
             } else {
                 // success
                 // set token
-                $this->add_option('single_access_token', $this->api->response['single_access_token']);
+                if ($this->get_option('single_access_token') === false) {
+                    $this->add_option('single_access_token', $this->api->response['user']['single_access_token']);
+                } else {
+                    $this->update_option('single_access_token', $this->api->response['user']['single_access_token']);
+                }
 
                 // submit blog info
                 $this->api->create_outside_blog(array(

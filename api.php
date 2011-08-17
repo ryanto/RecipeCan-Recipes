@@ -8,7 +8,9 @@ class RecipeCan_Api extends RecipeCan_Abstract {
 
     public function call($verb, $url, $args = array(), $headers = array()) {
 
-        $debug = true;
+        set_time_limit(0);
+
+        $debug = false;
 
         $api_key = $this->get_option('single_access_token');
 

@@ -28,10 +28,14 @@ class RecipeCan_Binders_Editor extends RecipeCan_Binders_Abstract {
     }
 
     public function select_recipe() {
-        $recipes = $this->make_recipes();
+        if ($this->has_required_settings()) {
+            $recipes = $this->make_recipes();
 
-        $this->view->set('recipes', $recipes->all_data());
-        $this->view->render('editor/index');
+            $this->view->set('recipes', $recipes->all_data());
+            $this->view->render('editor/index');
+        } else {
+            $this->view->render('editor/signup');
+        }
         die();
     }
 
