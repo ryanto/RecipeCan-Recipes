@@ -7,11 +7,14 @@ free and open source.
 
 ## Screenshots
 
-Recipe inside of a blog post
+### Recipe inside of a blog post
+
 ![Post](https://github.com/ryanto/RecipeCan-Recipes/raw/master/images/demo/post.png)
 
-Editing a recipe
+### Editing a recipe
+
 ![Editing](https://github.com/ryanto/RecipeCan-Recipes/raw/master/images/demo/edit.png)
 
-Listing of recipes
+### Listing of recipes
+
 ![Listing](https://github.com/ryanto/RecipeCan-Recipes/raw/master/images/demo/list.png)
