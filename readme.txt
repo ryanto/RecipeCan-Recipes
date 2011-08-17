@@ -5,11 +5,15 @@ Tags: recipe, recipes, recipecan
 Requires at least: 3.0
 Tested up to: 3.2.1
 
-A Wordpress plugin to that organizes recipes on for blog.
+A Wordpress plugin that organizes recipes on your blog.
+
+This is the Wordpress plugin that we use to manage all of the recipes on the
+RecipeCan Blog.  It allows any Wordpress blogger to post, edit, and browse
+recipes and  photos.  The plugin is free and open source.
 
 == Description ==
 
-A Wordpress plugin to that organizes recipes on for blog.
+A Wordpress plugin that organizes recipes on for blog.
 
 == Screenshots ==
 

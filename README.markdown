@@ -1,9 +1,8 @@
 # RecipeCan For Wordpress
 
 This is the Wordpress plugin that we use to manage all of the recipes on the
-[RecipeCan Blog](http://www.recipecan.com/blog/).  It allows any Wordpress blog
-to post, edit, and browse recipes and their photos.  The plugin with completely
-free and open source.
+[RecipeCan Blog](http://www.recipecan.com/blog/).  It allows any Wordpress blogger
+to post, edit, and browse recipes and photos.  The plugin is free and open source.
 
 ## Screenshots
 
