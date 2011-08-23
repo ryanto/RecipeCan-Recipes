@@ -4,10 +4,9 @@ Donate link: http://www.recipecan.com
 Tags: recipe, recipes, recipecan
 Requires at least: 3.0
 Tested up to: 3.2.1
-Stable tag: 0.0.1
+Stable tag: 0.1.11
 
 A Wordpress plugin that organizes recipes on your blog.
-
 
 == Description ==
 
@@ -25,6 +24,14 @@ recipes and  photos.  The plugin is free and open source.
 
 == Changelog ==
 
+= 0.1.11 =
+* HTML Comment Discovery 
+
+= 0.1.1 =
+* Version bump
+* Cleaning up minor errors
+
 = 0.0.1 =
 * First version of plugin
+
 
