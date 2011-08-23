@@ -87,6 +87,7 @@ br.recipecan_clear {
     padding: 0 0 0 20px; }
   #recipecan_recipe_insert ul,
   #recipecan_recipe_page ul {
+    padding: 0;
     margin: 0; }
   #recipecan_recipe_insert li,
   #recipecan_recipe_page li {
