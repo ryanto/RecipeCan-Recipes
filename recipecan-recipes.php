@@ -12,12 +12,12 @@ define('RECIPECAN_VERSION', '0.1.1');
 
 
 $recipecan_options = array(
-    'plugin_url' => plugin_dir_url(__FILE__),
+    'plugin_url' => plugins_url() . "/recipecan-recipes/",
     'plugin_version' => RECIPECAN_VERSION,
     'path' => dirname(__FILE__),
     'request' => $_REQUEST,
-    'api_server' => 'www.recipecan.com',
-    'image_server' => 'www.recipecan.com',
+    'api_server' => 'www.recipecan.dev',
+    'image_server' => 'www.recipecan.dev',
     'api_version' => 'v1',
     'prefix' => 'recipecan_',
     'register_global_names' => array('recipes', 'myrecipes', 'recipecan')
