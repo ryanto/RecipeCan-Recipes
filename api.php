@@ -81,7 +81,7 @@ class RecipeCan_Api extends RecipeCan_Abstract {
     }
 
     public function success() {
-        return!$this->failed();
+        return !$this->failed();
     }
 
     public function login($args) {
