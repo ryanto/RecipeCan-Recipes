@@ -4,6 +4,8 @@ require_once 'abstract.php';
 
 class RecipeCan_Binders_Recipes extends RecipeCan_Binders_Abstract {
 
+    private $_recipes;
+
     public function run() {
         //add_filter('single_template', array(&$this, 'template'));
         //add_filter('archive_template', array(&$this, 'archive'));
@@ -35,9 +37,39 @@ class RecipeCan_Binders_Recipes extends RecipeCan_Binders_Abstract {
     }
 
     public function list_recipes() {
+
+        $this->_recipes = $this->make_recipes();
+
+        if ($this->request('search') != '') {
+            $display = $this->search();
+        } else {
+            $display = $this->index();
+        }
+
         $recipes = $this->make_recipes();
-        $this->view->set('recipes', $recipes->all());
-        return $this->view->read('recipes/index');
+
+        $this->view->set('recipes', $recipes);
+        $this->view->set('page_name', $this->get_option('page_name'));
+        $this->view->set('display', $display);
+
+        return $this->view->render('recipes/index');
+    }
+
+    public function index() {
+        return array(
+            'title' => 'Recent Recipes',
+            'recipes' => $this->_recipes->all(4)
+        );
+    }
+
+    public function search() {
+
+        $term = $this->request('search');
+
+        return array(
+            'title' => ucfirst($term) . " Recipes",
+            'recipes' => $this->_recipes->search($term)
+        );
     }
 
     public function insert($attrs) {

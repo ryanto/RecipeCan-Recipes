@@ -54,3 +54,8 @@ task :tag do
   sh "cd ../svn/recipecan-recipes/ && svn up"
 
 end
+
+desc "start sass watch"
+task :sass do
+  sh 'sass --watch ./stylesheets'
+end

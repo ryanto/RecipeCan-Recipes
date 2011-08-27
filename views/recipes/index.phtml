@@ -1,5 +1,18 @@
+<?php
+    $display = $this->get('display');
+?>
+
 <div id="recipecan_list_recipes">
-    <?php foreach ($this->get('recipes') as $recipe) { ?>
+
+    <h2><?php $this->p($display['title']); ?></h2>
+    
+    <?php if (count($display['recipes']) < 1) { ?>
+        <div>
+            There are currently no recipes.
+        </div>
+    <?php } ?>
+
+    <?php foreach ($display['recipes'] as $recipe) { ?>
         <div class="recipecan_recipe">
             
             <div>
@@ -15,7 +28,7 @@
 
                 <div class="recipecan_info">
                     <div class="recipecan_title">
-                        <h2><a href="<?php $this->p($recipe->link()); ?>"><?php $this->p($recipe->get('name')); ?></a></h2>
+                        <h3><a href="<?php $this->p($recipe->link()); ?>"><?php $this->p($recipe->get('name')); ?></a></h3>
                     </div>
 
                     <div class="recipecan_tags">
@@ -30,3 +43,34 @@
         </div>
     <?php } ?>
 </div>
+
+<div id="recipecan_courses">
+
+    <h2>Course</h2>
+    
+    <?php foreach ($this->get('recipes')->courses() as $course) { ?>
+
+        <div class="recipecan_course">
+            <a href="<?php echo add_query_arg('search', strtolower($course), get_page_link($this->get('page_name'))); ?>"
+                ><?php $this->p($course) ?></a>
+        </div>
+
+    <?php } ?>
+
+    <br class="recipecan_clear" />
+</div>
+
+<div id="recipecan_search">
+
+    <h2>Search Recipes</h2>
+
+    <div>
+        <form class="recipecan_form" action="<?php echo get_page_link($this->get('page_name')); ?>" method="post">
+            <input class="recipecan_search_box" name="search" value="" maxlength="64" size="32" /> &nbsp;&nbsp;
+            <input class="recipecan_submit" type="submit" value=" Search " />
+        </form>
+    </div>
+    
+
+</div>
+
