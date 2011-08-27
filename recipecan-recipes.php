@@ -10,14 +10,21 @@
 
 define('RECIPECAN_VERSION', '0.1.12');
 
+$check_development = true;
+
+if ($check_development && getenv('APPLICATION_ENV') == 'development') {
+    $recipecan_hostname = 'www.recipecan.dev';
+} else {
+    $recipecan_hostname = 'www.recipecan.com';
+}
 
 $recipecan_options = array(
     'plugin_url' => plugins_url() . "/recipecan-recipes/",
     'plugin_version' => RECIPECAN_VERSION,
     'path' => dirname(__FILE__),
     'request' => $_REQUEST,
-    'api_server' => 'www.recipecan.com',
-    'image_server' => 'www.recipecan.com',
+    'api_server' => $recipecan_hostname,
+    'image_server' => $recipecan_hostname,
     'api_version' => 'v1',
     'prefix' => 'recipecan_',
     'register_global_names' => array('recipes', 'myrecipes', 'recipecan')
