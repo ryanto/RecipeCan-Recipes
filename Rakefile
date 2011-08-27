@@ -22,8 +22,8 @@ task :build do
     end
   end
 
-  # need an add script that does svn status and looks for new files
-  #sh "cd ../svn/recipecan-recipes/ && svn add "
+  # looks for new files and adds them
+  sh "cd ../svn/recipecan-recipes/ && svn status | grep '^?' | sed 's/^?       /svn add \"/g' | sed 's/$/\"/g' | sh"
 
   sh "cd ../svn/recipecan-recipes/ && svn ci --username ryanto -m 'commit files, see git for history'"
 end
