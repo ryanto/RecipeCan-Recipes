@@ -1,0 +1,42 @@
+<?php
+    $display = $this->get('display');
+?>
+
+<h2><?php $this->p($display['title']); ?></h2>
+
+<?php if (count($display['recipes']) < 1) { ?>
+    <div>
+        There are currently no recipes.
+    </div>
+<?php } ?>
+
+<?php foreach ($display['recipes'] as $recipe) { ?>
+    <div class="recipecan_recipe">
+        
+        <div>
+
+            <?php if ($recipe->has_image()) { ?>
+                <div class="recipecan_image">
+                    <img src="http://<?php $this->p($this->options['image_server']); ?><?php $this->p($recipe->get('photo_small')); ?>"
+                         alt="<?php $this->p($recipe->get('name')); ?> Recipe"
+                         height="100" width="100" />
+                </div>
+            <?php } ?>
+
+
+            <div class="recipecan_info">
+                <div class="recipecan_title">
+                    <h3><a href="<?php $this->p($recipe->link()); ?>"><?php $this->p($recipe->get('name')); ?></a></h3>
+                </div>
+
+                <div class="recipecan_tags">
+                    <?php $this->p($recipe->get('tag_list')); ?>
+                </div>
+            </div>
+
+            <br class="recipecan_clear" />
+            
+        </div>
+
+    </div>
+<?php } ?>

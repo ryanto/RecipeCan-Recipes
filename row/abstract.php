@@ -29,6 +29,7 @@ abstract class RecipeCan_Row_Abstract extends RecipeCan_Abstract {
             $model = new $name();
             $model->options = $this->options;
             //$model->api = $this->make_api();
+            $model->ensure_table();
             $this->_model = $model;
         }
     }

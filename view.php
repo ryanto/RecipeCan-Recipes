@@ -34,8 +34,21 @@ class RecipeCan_View {
         $this->set($name, $data);
     }
 
+    // helpers
+
     public function p($str) {
         echo htmlentities($str);
+    }
+
+    /**
+     * Displays Recipes, pass in array
+     *  title
+     *  recipes
+     *
+     */
+    public function display_recipes($data = array()) {
+        $this->set('display', $data);
+        $this->render('recipes/_recipes');
     }
 
     

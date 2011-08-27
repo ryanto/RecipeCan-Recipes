@@ -38,7 +38,14 @@ class RecipeCan_Models_Abstract extends RecipeCan_Abstract {
         require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
         dbDelta($sql);
 
-        $this->add_option($this->table_name() . '_table_version', $this->options['plugin_version']);
+        $option_name = $this->table_name() . '_table_version';
+        $option_value = $this->options['plugin_version'];
+
+        if ($this->get_option($option_name)) {
+            $this->update_option($option_name, $option_value);
+        } else {
+            $this->add_option($option_name, $option_value);
+        }
     }
 
     public function save($data, $where = array()) {

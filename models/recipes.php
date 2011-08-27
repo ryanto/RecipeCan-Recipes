@@ -24,6 +24,7 @@ class RecipeCan_Models_Recipes extends RecipeCan_Models_Abstract {
         'rating mediumint(9) not null',
         'slug varchar(255) not null',
         "likes mediumint(9) not null",
+        "wp_views mediumint(9) not null",
 
         "ingredients text not null",
         "directions text not null",
@@ -87,14 +88,26 @@ class RecipeCan_Models_Recipes extends RecipeCan_Models_Abstract {
         return $all;
     }
 
+    public function most_viewed() {
+        global $wpdb;
+
+        $results = $wpdb->get_results(
+                'select * from `' . mysql_real_escape_string($this->table_name()) . '`' .
+                ' order by wp_views desc limit 4',
+                ARRAY_A
+        );
+
+        $all = array();
+        foreach ($results as $data) {
+            $all[] = $this->make_row($data);
+        }
+        return $all;
+    }
+
     public function recipes() {
         return $this->all();
     }
 
-
-
-
-    
 
 }
 

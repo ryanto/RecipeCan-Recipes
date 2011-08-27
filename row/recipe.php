@@ -57,6 +57,11 @@ class RecipeCan_Row_Recipe extends RecipeCan_Row_Abstract {
         return $this->data_to_a('directions');
     }
 
+    public function viewed() {
+        $this->data['wp_views'] = $this->get('wp_views') + 1;
+        $this->save();
+    }
+
     public function data_to_a($field) {
         $text = $this->get($field);
         $text = preg_replace("/[\r\n]{2,}/", "\n", $text);

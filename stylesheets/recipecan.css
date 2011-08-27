@@ -40,19 +40,19 @@ br.recipecan_clear {
 #recipecan_insert_existing_recipe_box table td {
   padding: 0 5px 2px 0; }
 
-#recipecan_list_recipes {
+.recipecan_list_recipes {
   padding: 0 0 10px 0; }
-  #recipecan_list_recipes h2 {
+  .recipecan_list_recipes h2 {
     padding: 0 0 5px 0;
     margin: 0; }
-  #recipecan_list_recipes .recipecan_recipe {
+  .recipecan_list_recipes .recipecan_recipe {
     padding: 0 0 15px 0; }
-    #recipecan_list_recipes .recipecan_recipe .recipecan_image {
+    .recipecan_list_recipes .recipecan_recipe .recipecan_image {
       width: 110px;
       float: left; }
-    #recipecan_list_recipes .recipecan_recipe .recipecan_info {
+    .recipecan_list_recipes .recipecan_recipe .recipecan_info {
       float: left; }
-      #recipecan_list_recipes .recipecan_recipe .recipecan_info .recipecan_title h3 {
+      .recipecan_list_recipes .recipecan_recipe .recipecan_info .recipecan_title h3 {
         margin: 0;
         padding: 0 0 5px 0; }
 

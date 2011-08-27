@@ -32,6 +32,7 @@ the most popular recipes on it's homepage.
 
 = 0.1.13 =
 * Recent recipes on recipes page
+* Most popular recipes on recipes page
 * Browser recipes by course (Breakfast, Lunch, Dinner, etc)
 * Search for recipes
 * Better SQL searching

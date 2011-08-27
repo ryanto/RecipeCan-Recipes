@@ -51,6 +51,7 @@ abstract class RecipeCan_Abstract {
         $recipes = new RecipeCan_Models_Recipes();
         $recipes->options = $this->options;
         $recipes->api = $this->make_api();
+        $recipes->ensure_table();
 
         return $recipes;
     }

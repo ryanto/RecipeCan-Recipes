@@ -94,7 +94,7 @@ br.recipecan_clear {
     }
 }
 
-#recipecan_list_recipes {
+.recipecan_list_recipes {
 
     @include list_recipes_section();
 
@@ -129,7 +129,6 @@ br.recipecan_clear {
 }
 
 #recipecan_courses {
-
     @include list_recipes_section();
 
     .recipecan_course {

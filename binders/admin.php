@@ -326,11 +326,9 @@ class RecipeCan_Binders_Admin extends RecipeCan_Binders_Abstract {
             'filename' => $_FILES['recipecan_file']['tmp_name']
         ));
 
-        $this->view->set_data('recipe', $recipe);
 
         if ($this->api->failed()) {
             $this->view->set('error', $this->api->response['error']);
-            $this->view->render('admin/recipe_photo/show');
         } else {
             // save
             $recipes->save($this->api->response['recipe'], array('id' => $this->request('id')));
@@ -338,8 +336,10 @@ class RecipeCan_Binders_Admin extends RecipeCan_Binders_Abstract {
             $recipe = $recipes->find_by_id($this->request('id'));
             
             $this->view->set('saved', true);
-            $this->view->render('admin/recipe_photo/show');
         }
+
+        $this->view->set_data('recipe', $recipe);
+        $this->view->render('admin/recipe_photo/show');
     }
 
     public function settings() {
