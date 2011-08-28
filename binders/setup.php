@@ -7,12 +7,40 @@ class RecipeCan_Binders_Setup extends RecipeCan_Binders_Abstract {
     public function run() {
         add_action('init', array(&$this, 'post_type'));
         add_action('init', array(&$this, 'create_page'));
+        add_action('init', array(&$this, 'no_name_clashes'));
 
         // ensure tables
         $recipes = $this->make_recipes();
         $recipes->ensure_table();
     }
 
+    /**
+     * Some older versions of the plugin create a page and
+     * a posttype with the same name.  This aims to correct that.
+     */
+    public function no_name_clashes() {
+
+        $page_name = $this->get_page_name();
+        $post_type_name = $this->get_post_type_name();
+
+        if ($page_name == $post_type_name && $page_name != null && $this->get_option('created_page')) {
+
+            // delete the page
+            global $wpdb;
+            $sql = "delete from " . $wpdb->posts . " where post_name = '" . 
+                mysql_real_escape_string($page_name) . "'";
+
+            $wpdb->query($sql); 
+
+            // unset the page
+            $this->delete_option('page_name');
+            $this->delete_option('created_page');
+            
+            // create a new page
+            $this->create_page();
+        }
+
+    }
 
     public function post_type() {
         $labels = array(
@@ -51,9 +79,9 @@ class RecipeCan_Binders_Setup extends RecipeCan_Binders_Abstract {
     }
 
     public function generate_page_name($postfix = null) {
-        foreach ($this->options['register_global_names'] as $key => $name) {
+        foreach ($this->options['recipe_page_names'] as $key => $name) {
             $try_name = $name . $postfix;
-            if (!get_page_by_path($try_name)) {
+            if (!get_page_by_path($try_name) && $try_name != $this->get_post_type_name()) {
                 return $try_name;
             }
         }

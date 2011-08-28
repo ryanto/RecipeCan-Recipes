@@ -25,6 +25,10 @@ abstract class RecipeCan_Abstract {
         return get_option($this->options['prefix'] . $name);
     }
 
+    public function delete_option($name) {
+        return delete_option($this->options['prefix'] . $name);
+    }
+
 
 
     public function get_post_type_name() {
@@ -37,7 +41,7 @@ abstract class RecipeCan_Abstract {
     }
 
     public function generate_post_type_name($postfix = null) {
-        foreach ($this->options['register_global_names'] as $name) {
+        foreach ($this->options['recipe_post_type_names'] as $name) {
             $try_name = $name . $postfix;
             if (!post_type_exists($try_name)) {
                 return $try_name;
@@ -51,7 +55,6 @@ abstract class RecipeCan_Abstract {
         $recipes = new RecipeCan_Models_Recipes();
         $recipes->options = $this->options;
         $recipes->api = $this->make_api();
-        $recipes->ensure_table();
 
         return $recipes;
     }

@@ -35,7 +35,7 @@
 <?php } ?>
 
 <div>
-    <div class="recipecan_ingredients"">
+    <div class="recipecan_ingredients">
         <strong>Ingredients</strong>
         <ul>
             <?php foreach($recipe->ingredients() as $ingredient) { ?>
@@ -55,3 +55,45 @@
 
     <br class="recipecan_clear" />
 </div>
+
+<div class="recipecan_options">
+    
+        <a href="#" data-recipe-id="" class="recipecan_print_button">Print</a> | 
+        <a href="#" class="recipecan_print_ingredients_button">Print Ingredients Only</a>
+
+</div>
+
+<script>
+    jQuery(document).ready(function() {
+
+        var hide_recipes_that_arent = function(id) {
+            jQuery('.recipecan_recipe_insert').each(function(elm) {
+
+                console.log('checking');
+
+                // unhide all recipes
+                jQuery(elm).removeClass('recipecan_print_hide');
+
+                // not our id, then hide
+                if (!jQuery(elm).hasClass('recipecan_recipe_' + id)) {
+                    jQuery(elm).addClass('recipecan_print_hide');
+                    console.log('adding');
+                }
+
+            });
+        };
+
+        jQuery(".recipecan_print_button").click(function() {
+            jQuery('body').addClass('recipecan_print_recipe_body_wrapper');
+            hide_recipes_that_arent(jQuery(this).data('recipe-id'));
+            //window.print();
+            return false;
+        });
+
+        jQuery(".recipecan_print_ingredients_button").click(function() {
+            jQuery('body').addClass('recipecan_print_ingredients_body_wrapper');
+            //window.print();
+            return false;
+        });
+    });
+</script>

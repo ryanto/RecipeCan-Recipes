@@ -1,0 +1,54 @@
+@mixin format_for_printing() {
+    * {
+        background: none;
+    }
+
+    // hide some really common elements
+    #header, #comments, #sidebar, #menu, #wp_sidebar, #respond, #footer,
+    .wp_entry_closing, .wp_entry_byline, 
+    img { 
+        display: none; 
+    }
+
+    .recipecan_print_hide {
+        display: none;
+    }
+
+    #recipecan_recipe_page,
+    .recipecan_recipe_insert {
+
+        .recipecan_image {
+            display: none;
+        }
+
+        .recipecan_ingredients, .recipecan_directions {
+            float: none;
+            width: auto;
+            padding: 5px 0 5px 0;
+            border: 0;
+        }
+
+        .recipecan_options {
+            display: none;
+        }
+    }
+}
+
+@media all {
+    body.recipecan_print_recipe_body_wrapper {
+        @include format_for_printing();
+    }
+
+    body.recipecan_print_ingredients_body_wrapper {
+        @include format_for_printing();
+
+        #recipecan_recipe_page,
+        #recipecan_recipe_insert {
+            .recipecan_title, .recipecan_tags, .recipecan_info, 
+            .recipecan_directions {
+                display: none;
+            }
+        }
+    }
+
+}

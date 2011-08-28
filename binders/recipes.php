@@ -17,9 +17,11 @@ class RecipeCan_Binders_Recipes extends RecipeCan_Binders_Abstract {
     }
 
     public function stylesheet() {
-        $stylesheet = $this->options['plugin_url'] . '/stylesheets/recipecan.css';
-        wp_register_style('recipecan', $stylesheet);
+        $stylesheet_path = $this->options['plugin_url'] . '/stylesheets/';
+        wp_register_style('recipecan', $stylesheet_path . 'recipecan.css');
+        wp_register_style('recipecan_print', $stylesheet_path . 'print.css');
         wp_enqueue_style('recipecan');
+        wp_enqueue_style('recipecan_print');
     }
 
     public function template($single_template) {
@@ -57,6 +59,7 @@ class RecipeCan_Binders_Recipes extends RecipeCan_Binders_Abstract {
 
     public function recent() {
         return array(
+            'name' => 'recent',
             'title' => 'Recent Recipes',
             'recipes' => $this->_recipes->all(4)
         );
@@ -64,6 +67,7 @@ class RecipeCan_Binders_Recipes extends RecipeCan_Binders_Abstract {
 
     public function most_viewed() {
         return array(
+            'name' => 'popular',
             'title' => 'Most Popular Recipes',
             'recipes' => $this->_recipes->most_viewed()
         );
@@ -74,6 +78,7 @@ class RecipeCan_Binders_Recipes extends RecipeCan_Binders_Abstract {
         $term = $this->request('search');
 
         return array(
+            'name' => 'search',
             'title' => ucfirst($term) . " Recipes",
             'recipes' => $this->_recipes->search($term)
         );
