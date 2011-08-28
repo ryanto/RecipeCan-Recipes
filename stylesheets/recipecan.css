@@ -61,7 +61,7 @@ br.recipecan_clear {
     margin: 0 2% 0 2%;
     text-align: center;
     float: left;
-    width: 21%; }
+    width: 20%; }
     #recipecan_recipes_recent .recipecan_recipe_preview .recipecan_image img,
     #recipecan_recipes_search .recipecan_recipe_preview .recipecan_image img,
     #recipecan_recipes_popular .recipecan_recipe_preview .recipecan_image img {

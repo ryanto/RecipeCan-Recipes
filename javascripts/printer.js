@@ -1,7 +1,7 @@
 jQuery(document).ready(function() {
 
     var clear_classes = function() {
-        jQuery('body').removeClass('recipecan_print_ingredients_body_wrapper');
+        jQuery('body').removeClass('recipecan_print_recipe_body_wrapper');
         jQuery('body').removeClass('recipecan_print_ingredients_body_wrapper');
     };
 
@@ -30,7 +30,7 @@ jQuery(document).ready(function() {
 
     jQuery(".recipecan_print_button").click(function() {
         clear_classes();
-        jQuery('body').addClass('recipecan_print_ingredients_body_wrapper');
+        jQuery('body').addClass('recipecan_print_recipe_body_wrapper');
         print_recipe(jQuery(this).data('recipe-id'));
         return false;
     });
