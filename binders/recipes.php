@@ -14,6 +14,7 @@ class RecipeCan_Binders_Recipes extends RecipeCan_Binders_Abstract {
         add_shortcode('your-recipe-will-show-here', array(&$this, 'insert'));
         add_filter('the_content', array(&$this, 'page'));
         add_action('init', array(&$this, 'stylesheet'));
+        add_action('wp_enqueue_scripts', array(&$this, 'javascript'));
     }
 
     public function stylesheet() {
@@ -22,6 +23,12 @@ class RecipeCan_Binders_Recipes extends RecipeCan_Binders_Abstract {
         wp_register_style('recipecan_print', $stylesheet_path . 'print.css');
         wp_enqueue_style('recipecan');
         wp_enqueue_style('recipecan_print');
+    }
+
+    public function javascript() {
+        $javascript_path = $this->options['plugin_url'] . '/javascripts/';
+        wp_register_script('recipecan_print', $javascript_path . '/printer.js');
+        wp_enqueue_script('recipecan_print');
     }
 
     public function template($single_template) {

@@ -1,40 +1,57 @@
+@mixin show($name) {
+    .#{$name} {
+        display: block;
+        h2 {
+            display: block;
+            font-size: 1.3em;
+        }
+        strong {
+            display: inline;
+            font-weight: normal;
+        }
+        ul {
+            display: block;
+            li {
+                display: block;
+                padding: 0 0 5px 0;
+            }
+        }
+        padding: 0 0 10px 0;
+    }
+
+}
+
 @mixin format_for_printing() {
     * {
         background: none;
-    }
-
-    // hide some really common elements
-    #header, #comments, #sidebar, #menu, #wp_sidebar, #respond, #footer,
-    .wp_entry_closing, .wp_entry_byline, 
-    img { 
-        display: none; 
-    }
-
-    .recipecan_print_hide {
         display: none;
     }
 
-    #recipecan_recipe_page,
-    .recipecan_recipe_insert {
+    // we need to explicitly show everything!
+    #recipecan_print_area {
+        display: block;
+                
+        @include show('recipecan_title');
+        @include show('recipecan_tags');
+        @include show('recipecan_info');
 
-        .recipecan_image {
-            display: none;
+        .recipecan_split_container {
+            display: block;
+            @include show('recipecan_ingredients');
+            @include show('recipecan_directions');
+            .recipecan_ingredients, .recipecan_directions {
+                strong {
+                    font-size: 1.1em;
+                    font-weight: bold;
+                }
+            }
         }
-
-        .recipecan_ingredients, .recipecan_directions {
-            float: none;
-            width: auto;
-            padding: 5px 0 5px 0;
-            border: 0;
-        }
-
-        .recipecan_options {
-            display: none;
-        }
+        
     }
+
 }
 
-@media all {
+@media print {
     body.recipecan_print_recipe_body_wrapper {
         @include format_for_printing();
     }
@@ -42,10 +59,9 @@
     body.recipecan_print_ingredients_body_wrapper {
         @include format_for_printing();
 
-        #recipecan_recipe_page,
-        #recipecan_recipe_insert {
-            .recipecan_title, .recipecan_tags, .recipecan_info, 
-            .recipecan_directions {
+        #recipecan_print_area {
+            .recipecan_tags, .recipecan_info, 
+            .recipecan_split_container .recipecan_directions {
                 display: none;
             }
         }

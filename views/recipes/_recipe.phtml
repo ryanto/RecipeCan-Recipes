@@ -1,99 +1,72 @@
 <?php $recipe = $this->get('recipe'); ?>
 
-<!-- RecipeCanId:<?php $this->p($recipe->get('recipecan_id')); ?> -->
+<div class="recipecan_recipe_show_full recipecan_recipe_<?php $this->p($recipe->get('id')); ?>">
 
-<div class="recipecan_title">
-    <h2><?php $this->p($recipe->get('name')); ?></h2>
-</div>
+    <!-- RecipeCanId:<?php $this->p($recipe->get('recipecan_id')); ?> -->
 
-<?php if ($recipe->has_image()) { ?>
-    <div class="recipecan_image">
-        <img src="<?php $this->p($recipe->image()); ?>"
-             alt="<?php $this->p($recipe->get('name')); ?> Recipe"
-             />
+    <div class="recipecan_title">
+        <h2><?php $this->p($recipe->get('name')); ?></h2>
     </div>
-<?php } ?>
 
-<div class="recipecan_tags">
-    <?php $this->p($recipe->get('tag_list')); ?>
-</div>
+    <?php if ($recipe->has_image()) { ?>
+        <div class="recipecan_image">
+            <img src="<?php $this->p($recipe->image()); ?>"
+                 alt="<?php $this->p($recipe->get('name')); ?> Recipe"
+                 />
+        </div>
+    <?php } ?>
 
-<?php if ($recipe->get('make_time') != '' || $recipe->get('servings')) { ?>
-    <div class="recipecan_info">
-        <?php if ($recipe->get('make_time') != '') { ?>
-            Cooks in <strong><?php $this->p($recipe->get('make_time')); ?></strong>
-        <?php } ?>
-
-        <?php if ($recipe->get('make_time') != '' && $recipe->get('servings')) { ?>
-            &nbsp;&nbsp;&nbsp;
-        <?php } ?>
-
-        <?php if ($recipe->get('servings') != '') { ?>
-            Serves <strong><?php $this->p($recipe->get('servings')); ?></strong>
-        <?php } ?>
+    <div class="recipecan_tags">
+        <?php $this->p($recipe->get('tag_list')); ?>
     </div>
-<?php } ?>
 
-<div>
-    <div class="recipecan_ingredients">
-        <strong>Ingredients</strong>
-        <ul>
-            <?php foreach($recipe->ingredients() as $ingredient) { ?>
-                <li><?php $this->p($ingredient); ?></li>
+    <?php if ($recipe->get('make_time') != '' || $recipe->get('servings')) { ?>
+        <div class="recipecan_info">
+            <?php if ($recipe->get('make_time') != '') { ?>
+                Cooks in <strong><?php $this->p($recipe->get('make_time')); ?></strong>
             <?php } ?>
-        </ul>
-    </div>
 
-    <div class="recipecan_directions">
-        <strong>Directions</strong>
-        <ul>
-            <?php foreach($recipe->directions() as $direction) { ?>
-                <li><?php $this->p($direction); ?></li>
+            <?php if ($recipe->get('make_time') != '' && $recipe->get('servings')) { ?>
+                &nbsp;&nbsp;&nbsp;
             <?php } ?>
-        </ul>
+
+            <?php if ($recipe->get('servings') != '') { ?>
+                Serves <strong><?php $this->p($recipe->get('servings')); ?></strong>
+            <?php } ?>
+        </div>
+    <?php } ?>
+
+    <div class="recipecan_split_container">
+        <div class="recipecan_ingredients">
+            <strong>Ingredients</strong>
+            <ul>
+                <?php foreach($recipe->ingredients() as $ingredient) { ?>
+                    <li><?php $this->p($ingredient); ?></li>
+                <?php } ?>
+            </ul>
+        </div>
+
+        <div class="recipecan_directions">
+            <strong>Directions</strong>
+            <ul>
+                <?php foreach($recipe->directions() as $direction) { ?>
+                    <li><?php $this->p($direction); ?></li>
+                <?php } ?>
+            </ul>
+        </div>
+
+        <br class="recipecan_clear" />
     </div>
 
-    <br class="recipecan_clear" />
+    <div class="recipecan_options">
+        
+        <a href="#" 
+            data-recipe-id="<?php $this->p($recipe->get('id')); ?>" 
+            class="recipecan_print_button">Print</a> | 
+        <a href="#" 
+            data-recipe-id="<?php $this->p($recipe->get('id')); ?>" 
+            class="recipecan_print_ingredients_button">Print Ingredients Only</a>
+
+    </div>
 </div>
 
-<div class="recipecan_options">
-    
-        <a href="#" data-recipe-id="" class="recipecan_print_button">Print</a> | 
-        <a href="#" class="recipecan_print_ingredients_button">Print Ingredients Only</a>
-
-</div>
-
-<script>
-    jQuery(document).ready(function() {
-
-        var hide_recipes_that_arent = function(id) {
-            jQuery('.recipecan_recipe_insert').each(function(elm) {
-
-                console.log('checking');
-
-                // unhide all recipes
-                jQuery(elm).removeClass('recipecan_print_hide');
-
-                // not our id, then hide
-                if (!jQuery(elm).hasClass('recipecan_recipe_' + id)) {
-                    jQuery(elm).addClass('recipecan_print_hide');
-                    console.log('adding');
-                }
-
-            });
-        };
-
-        jQuery(".recipecan_print_button").click(function() {
-            jQuery('body').addClass('recipecan_print_recipe_body_wrapper');
-            hide_recipes_that_arent(jQuery(this).data('recipe-id'));
-            //window.print();
-            return false;
-        });
-
-        jQuery(".recipecan_print_ingredients_button").click(function() {
-            jQuery('body').addClass('recipecan_print_ingredients_body_wrapper');
-            //window.print();
-            return false;
-        });
-    });
-</script>
