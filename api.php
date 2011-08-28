@@ -93,6 +93,7 @@ class RecipeCan_Api extends RecipeCan_Abstract {
     }
 
     public function create_account($args) {
+        $args['user']['signup_source'] = "wp_plugin-" . RECIPECAN_VERSION;
         return $this->call('post', 'users', $args);
     }
 
