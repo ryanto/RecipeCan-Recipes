@@ -46,32 +46,37 @@ br.recipecan_clear {
 #recipecan_recipes_recent,
 #recipecan_recipes_search,
 #recipecan_recipes_popular {
-  padding: 0 0 10px 0; }
+  padding: 0 0 10px 0;
+  width: 100%; }
   #recipecan_recipes_recent h2,
   #recipecan_recipes_search h2,
   #recipecan_recipes_popular h2 {
     padding: 10px 0 10px 0;
     line-height: 1.5em;
     margin: 0; }
-  #recipecan_recipes_recent .recipecan_recipe,
-  #recipecan_recipes_search .recipecan_recipe,
-  #recipecan_recipes_popular .recipecan_recipe {
-    padding: 0 0 15px 0; }
-    #recipecan_recipes_recent .recipecan_recipe .recipecan_image,
-    #recipecan_recipes_search .recipecan_recipe .recipecan_image,
-    #recipecan_recipes_popular .recipecan_recipe .recipecan_image {
-      width: 110px;
-      float: left; }
-    #recipecan_recipes_recent .recipecan_recipe .recipecan_info,
-    #recipecan_recipes_search .recipecan_recipe .recipecan_info,
-    #recipecan_recipes_popular .recipecan_recipe .recipecan_info {
-      float: left; }
-      #recipecan_recipes_recent .recipecan_recipe .recipecan_info .recipecan_title h3,
-      #recipecan_recipes_search .recipecan_recipe .recipecan_info .recipecan_title h3,
-      #recipecan_recipes_popular .recipecan_recipe .recipecan_info .recipecan_title h3 {
-        font-size: 1.2em;
-        margin: 0;
-        padding: 0 0 5px 0; }
+  #recipecan_recipes_recent .recipecan_recipe_preview,
+  #recipecan_recipes_search .recipecan_recipe_preview,
+  #recipecan_recipes_popular .recipecan_recipe_preview {
+    padding: 0 0 15px 0;
+    margin: 0 2% 0 2%;
+    text-align: center;
+    float: left;
+    width: 21%; }
+    #recipecan_recipes_recent .recipecan_recipe_preview .recipecan_image img,
+    #recipecan_recipes_search .recipecan_recipe_preview .recipecan_image img,
+    #recipecan_recipes_popular .recipecan_recipe_preview .recipecan_image img {
+      width: 100%; }
+    #recipecan_recipes_recent .recipecan_recipe_preview .recipecan_title h3,
+    #recipecan_recipes_search .recipecan_recipe_preview .recipecan_title h3,
+    #recipecan_recipes_popular .recipecan_recipe_preview .recipecan_title h3 {
+      font-size: 1.1em;
+      line-height: 1.2em;
+      margin: 0;
+      padding: 0 0 5px 0; }
+    #recipecan_recipes_recent .recipecan_recipe_preview .recipecan_title a,
+    #recipecan_recipes_search .recipecan_recipe_preview .recipecan_title a,
+    #recipecan_recipes_popular .recipecan_recipe_preview .recipecan_title a {
+      text-decoration: none; }
 
 #recipecan_courses {
   padding: 0 0 10px 0; }

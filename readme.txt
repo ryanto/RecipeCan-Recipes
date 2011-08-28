@@ -33,6 +33,7 @@ the most popular recipes on it's homepage.
 = 0.1.14 =
 * Recipe page name and posttype will no longer clash
 * Better formatting on recipes page
+* Downloads updates when recipe table version changes
 
 = 0.1.13 =
 * Recent recipes on recipes page

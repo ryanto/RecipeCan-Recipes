@@ -104,32 +104,35 @@ br.recipecan_clear {
 #recipecan_recipes_popular {
 
     @include list_recipes_section();
+    width: 100%;
 
-    .recipecan_recipe {
+    .recipecan_recipe_preview {
 
         padding: 0 0 15px 0;
+        margin: 0 2% 0 2%;
+
+        text-align: center;
+
+        float: left;
+        width: 21%;
 
         .recipecan_image {
-            width: 110px;
-            float: left;
+            img {
+                width: 100%;
+            }
         }
 
-        .recipecan_info {
-
-            float: left;
-
-            .recipecan_title {
-                h3 {
-                    font-size: 1.2em;
-                    margin: 0;
-                    padding: 0 0 5px 0;
-                }
+        .recipecan_title {
+            h3 {
+                font-size: 1.1em;
+                line-height: 1.2em;
+                margin: 0;
+                padding: 0 0 5px 0;
             }
 
-            .recipecan_tags {
-            
+            a {
+                text-decoration: none;
             }
-
         }
 
     }

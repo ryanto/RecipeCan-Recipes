@@ -12,33 +12,29 @@
     <?php } ?>
 
     <?php foreach ($display['recipes'] as $recipe) { ?>
-        <div class="recipecan_recipe">
+        <div class="recipecan_recipe_preview">
+
+            <?php 
+                if ($recipe->has_image()) {
+                    $image = "http://" . $this->options['image_server'] . $recipe->get('photo_medium');
+                } else { 
+                    $image = $this->options['plugin_url'] . '/images/recipe/no_photo_preview.jpg'; 
+                }
+            ?>
             
-            <div>
+            <div class="recipecan_image">
+                <a href="<?php $this->p($recipe->link()); ?>"><img src="<?php $this->p($image); ?>" 
+                    alt="<?php $this->p($recipe->safe_name()); ?> Recipe"
+                    border="0" /></a>
+            </div>
 
-                <?php if ($recipe->has_image()) { ?>
-                    <div class="recipecan_image">
-                        <img src="http://<?php $this->p($this->options['image_server']); ?><?php $this->p($recipe->get('photo_small')); ?>"
-                             alt="<?php $this->p($recipe->get('name')); ?> Recipe"
-                             height="100" width="100" />
-                    </div>
-                <?php } ?>
-
-
-                <div class="recipecan_info">
-                    <div class="recipecan_title">
-                        <h3><a href="<?php $this->p($recipe->link()); ?>"><?php $this->p($recipe->get('name')); ?></a></h3>
-                    </div>
-
-                    <div class="recipecan_tags">
-                        <?php $this->p($recipe->get('tag_list')); ?>
-                    </div>
-                </div>
-
-                <br class="recipecan_clear" />
-                
+            <div class="recipecan_title">
+                <h3><a href="<?php $this->p($recipe->link()); ?>"><?php $this->p($recipe->get('name')); ?></a></h3>
             </div>
 
         </div>
     <?php } ?>
+
+    <br class="recipecan_clear" />
+
 </div>
