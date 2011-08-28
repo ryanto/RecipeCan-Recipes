@@ -8,7 +8,6 @@ class RecipeCan_Binders_Setup extends RecipeCan_Binders_Abstract {
         add_action('init', array(&$this, 'post_type'));
         add_action('init', array(&$this, 'create_page'));
         add_action('init', array(&$this, 'no_name_clashes'));
-
         // ensure tables
         $recipes = $this->make_recipes();
         $recipes->ensure_table();

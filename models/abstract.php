@@ -46,6 +46,8 @@ class RecipeCan_Models_Abstract extends RecipeCan_Abstract {
         } else {
             $this->add_option($option_name, $option_value);
         }
+
+        $this->after_make_table();
     }
 
     public function save($data, $where = array()) {

@@ -20,6 +20,7 @@ class RecipeCan_Models_Recipes extends RecipeCan_Models_Abstract {
         'tag_list varchar(255) not null',
 
         'photo_large varchar(255)',
+        'photo_medium varchar(255)',
         'photo_small varchar(255)',
         'rating mediumint(9) not null',
         'slug varchar(255) not null',
@@ -33,8 +34,14 @@ class RecipeCan_Models_Recipes extends RecipeCan_Models_Abstract {
         "make_time_in_seconds mediumint(9)",
     );
 
+    public function after_make_table() {
+        if ($this->get_option('single_access_token')) {
+            $this->download_recipes();
+        }
+    }
 
     public function download_recipes() {
+
         $this->api->recipes();
 
         foreach($this->api->response as $data) {
