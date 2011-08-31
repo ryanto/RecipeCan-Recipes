@@ -18,9 +18,9 @@ class RecipeCan_Binders_Recipes extends RecipeCan_Binders_Abstract {
     }
 
     public function stylesheet() {
-        $stylesheet_path = $this->options['plugin_url'] . '/stylesheets/';
-        wp_register_style('recipecan', $stylesheet_path . 'recipecan.css');
-        wp_register_style('recipecan_print', $stylesheet_path . 'print.css');
+        $stylesheet_path = $this->options['plugin_url'] . 'stylesheets/';
+        wp_register_style('recipecan', $stylesheet_path . 'recipecan.css', false, $this->options['plugin_version'], 'all');
+        wp_register_style('recipecan_print', $stylesheet_path . 'print.css', false, $this->options['plugin_version'], 'print');
         wp_enqueue_style('recipecan');
         wp_enqueue_style('recipecan_print');
     }
