@@ -11,8 +11,11 @@
         </div>
     <?php } ?>
 
+    <?php $recipe_count = 0; ?>
     <?php foreach ($display['recipes'] as $recipe) { ?>
         <div class="recipecan_recipe_preview">
+
+            <?php $recipe_count++; ?>
 
             <?php 
                 if ($recipe->has_image()) {
@@ -33,8 +36,15 @@
             </div>
 
         </div>
+
+        <?php if ($recipe_count % 4 == 0) { ?>
+            <br class="recipecan_clear" />
+        <?php } ?>
+
     <?php } ?>
 
-    <br class="recipecan_clear" />
+    <?php if ($recipe_count % 4 != 0) { ?>
+        <br class="recipecan_clear" />
+    <?php } ?>
 
 </div>

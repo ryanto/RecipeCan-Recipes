@@ -32,6 +32,8 @@ the most popular recipes on it's homepage.
 
 = 0.1.15 =
 * Versioned stylesheets so they get updated with releases
+* Recipes page wraps recipes nicely
+* Better screenshot
 
 = 0.1.14 =
 * Recipe page name and posttype will no longer clash
