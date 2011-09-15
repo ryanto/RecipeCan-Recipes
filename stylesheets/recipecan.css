@@ -122,7 +122,7 @@ br.recipecan_clear {
     border-right: 1px solid #c0c0c0; }
   .recipecan_recipe_show_full .recipecan_directions {
     float: left;
-    width: 50%;
+    width: 45%;
     padding: 0 0 0 20px; }
   .recipecan_recipe_show_full ul {
     padding: 0;
