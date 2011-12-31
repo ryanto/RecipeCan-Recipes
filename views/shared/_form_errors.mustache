@@ -5,13 +5,15 @@
     
     {{#errors}}
 
-      <span class="recipecan_field">
-        {{field}}
-      </span>
+      <div>
+        <span class="recipecan_field">
+          {{field}}
+        </span>
 
-      {{#errors}}
-        {{.}}
-      {{/errors}}
+        {{#errors}}
+          {{.}} 
+        {{/errors}}
+      </div>
 
     {{/errors}}
   </div>

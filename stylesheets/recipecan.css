@@ -1,3 +1,7 @@
+#recipecan_create_account input#login {
+  margin: 1px;
+  padding: 3px; }
+
 #recipecan_table th {
   text-align: left;
   padding: 0 5px 2px 0;

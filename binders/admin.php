@@ -125,8 +125,13 @@ class RecipeCan_Binders_Admin extends RecipeCan_Binders_Abstract {
             $this->view->set('message', 'You already have an account.');
             $this->view->render('admin/error');
         } else {
-            $this->view->set('name', get_option('blogname'));
-            $this->view->set('url', get_option('siteurl'));
+            $this->view->set('blog', array(
+                'name' => get_option('blogname'),
+                'url' => get_option('siteurl')
+            ));
+            $this->view->set('user', array(
+                'email' => get_option('admin_email')
+            ));
             $this->view->render('admin/setup/create');
         }
     }
@@ -146,24 +151,10 @@ class RecipeCan_Binders_Admin extends RecipeCan_Binders_Abstract {
 
             if ($this->api->failed()) {
                 // if fail, reprint with set options
-                $this->view->set('error', $this->api->errors());
+                $this->view->errors($this->api->errors());
 
-                $forms = array(
-                    'user' => array(
-                        'first_name', 'last_name', 'email', 'login',
-                        'password', 'password_confirmation',
-                    ),
-                    'outside_blog' => array(
-                        'name', 'url'
-                    )
-                );
-
-                foreach ($forms as $form_name => $form_fields) {
-                    $submitted_form = $this->request($form_name);
-                    foreach ($form_fields as $field) {
-                        $this->view->set($field, $submitted_form[$field]);
-                    }
-                }
+                $this->view->set('user', $this->request('user'));
+                $this->view->set('blog', $this->request('outside_blog'));
 
                 $this->view->render('admin/setup/create');
             } else {

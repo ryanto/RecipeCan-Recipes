@@ -1,0 +1,68 @@
+
+<div id="recipecan_create_account">
+
+  <h2>Setup RecipeCan</h2>
+
+  <p>
+    Please fill in the following details to get started.
+  </p>
+
+  {{>form_errors}}
+
+  <form method="post" action="?page=recipecan_create_account&method=post">
+
+    {{#user}}
+      <b>User Information</b>
+      <ul>
+        <li>
+          <label for="first_name">First Name:</label><br />
+          <input name="user[first_name]" id="first_name" value="{{first_name}}" size="32" />
+        </li>
+
+        <li>
+          <label for="last_name">Last Name:</label><br />
+          <input name="user[last_name]" id="last_name" value="{{last_name}}" size="32" />
+        </li>
+
+        <li>
+          <label for="email">E-mail:</label><br />
+          <input name="user[email]" id="email" value="{{email}}" size="48" />
+        </li>
+
+        <li>
+          <label for="login">Username:</label><br />
+          <input name="user[login]" id="login" value="{{login}}" size="48" />
+        </li>
+
+        <li>
+          <label for="password">Password:</label><br />
+          <input name="user[password]" type="password" id="password" value="{{password}}" size="18" />
+        </li>
+
+        <li>
+          <label for="password_confirmation">Confirm Password:</label><br />
+          <input name="user[password_confirmation]" type="password" id="password" value="{{password_confirmation}}" size="18" />
+        </li>
+      </ul>
+    {{/user}}
+
+    {{#blog}}
+      <b>Blog Details</b>
+      <ul>
+        <li>
+          <label for="blog_name">Blog Name:</label><br />
+          <input name="outside_blog[name]" id="blog_name" value="{{name}}" size="48" />
+        </li>
+
+        <li>
+          <label for="blog_url">Blog Url:</label><br />
+          <input name="outside_blog[url]" id="blog_url" value="{{url}}" size="64" />
+        </li>
+      </ul>
+    {{/blog}}
+
+    <input class="button-primary" type="submit" name="Save" value="Create Account" id="submitbutton" />
+
+  </form>
+
+</div>
