@@ -1,0 +1,72 @@
+{{#recipe}}
+
+  <div class="recipecan_recipe_show_full recipecan_recipe_{{data.id}}">
+
+    <!-- RecipeCanId:{{data.recipecan_id}} -->
+
+    <div class="recipecan_title">
+      <h2>{{data.name}}</h2>
+    </div>
+
+    {{#has_image}}
+      <div class="recipecan_image">
+        <img src="{{image}}"
+          alt="{{safe_name}} Recipe"
+             />
+       </div>
+    {{/has_image}}
+
+    <div class="recipecan_tags">
+      {{data.tag_list}}
+    </div>
+
+    <div class="recipecan_info">
+      {{#data.make_time}}
+        Cooks in {{data.make_time}}
+      {{/data.make_time}}
+
+      &nbsp;&nbsp;
+
+      {{#data.servings}}
+        Servers {{data.servings}}
+      {{/data.servings}}
+    </div>
+
+    <div class="recipecan_split_container">
+      <div class="recipecan_ingredients">
+        <strong>Ingredients</strong>
+        <ul>
+          {{#ingredients}}
+            <li>{{.}}</li>
+          {{/ingredients}}
+        </ul>
+      </div>
+
+      <div class="recipecan_directions">
+        <strong>Directions</strong>
+        <ul>
+          {{#directions}}
+            <li>{{.}}</li>
+          {{/directions}}
+        </ul>
+      </div>
+
+      <br class="recipecan_clear" />
+    </div>
+
+
+    <div class="recipecan_options">
+        
+      <a href="#" 
+        data-recipe-id="{{data.id}}" 
+        class="recipecan_print_button">Print Recipe</a> | 
+      <a href="#" 
+        data-recipe-id="{{data.id}}" 
+        class="recipecan_print_ingredients_button">Print Ingredients Only</a>
+
+    </div>
+
+
+  </div>
+{{/recipe}}
+

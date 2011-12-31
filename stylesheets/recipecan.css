@@ -43,17 +43,25 @@ br.recipecan_clear {
 #recipecan_insert_existing_recipe_box table td {
   padding: 0 5px 2px 0; }
 
+#recipecan_recipes_all,
 #recipecan_recipes_recent,
 #recipecan_recipes_search,
 #recipecan_recipes_popular {
   padding: 0 0 10px 0;
   width: 100%; }
+  #recipecan_recipes_all h2,
   #recipecan_recipes_recent h2,
   #recipecan_recipes_search h2,
   #recipecan_recipes_popular h2 {
     padding: 10px 0 10px 0;
     line-height: 1.5em;
     margin: 0; }
+  #recipecan_recipes_all div.recipecan_recipe_preview:nth-of-type(4n+5),
+  #recipecan_recipes_recent div.recipecan_recipe_preview:nth-of-type(4n+5),
+  #recipecan_recipes_search div.recipecan_recipe_preview:nth-of-type(4n+5),
+  #recipecan_recipes_popular div.recipecan_recipe_preview:nth-of-type(4n+5) {
+    clear: both; }
+  #recipecan_recipes_all .recipecan_recipe_preview,
   #recipecan_recipes_recent .recipecan_recipe_preview,
   #recipecan_recipes_search .recipecan_recipe_preview,
   #recipecan_recipes_popular .recipecan_recipe_preview {
@@ -62,10 +70,12 @@ br.recipecan_clear {
     text-align: center;
     float: left;
     width: 20%; }
+    #recipecan_recipes_all .recipecan_recipe_preview .recipecan_image img,
     #recipecan_recipes_recent .recipecan_recipe_preview .recipecan_image img,
     #recipecan_recipes_search .recipecan_recipe_preview .recipecan_image img,
     #recipecan_recipes_popular .recipecan_recipe_preview .recipecan_image img {
       width: 100%; }
+    #recipecan_recipes_all .recipecan_recipe_preview .recipecan_title h3,
     #recipecan_recipes_recent .recipecan_recipe_preview .recipecan_title h3,
     #recipecan_recipes_search .recipecan_recipe_preview .recipecan_title h3,
     #recipecan_recipes_popular .recipecan_recipe_preview .recipecan_title h3 {
@@ -73,10 +83,18 @@ br.recipecan_clear {
       line-height: 1.2em;
       margin: 0;
       padding: 0 0 5px 0; }
+    #recipecan_recipes_all .recipecan_recipe_preview .recipecan_title a,
     #recipecan_recipes_recent .recipecan_recipe_preview .recipecan_title a,
     #recipecan_recipes_search .recipecan_recipe_preview .recipecan_title a,
     #recipecan_recipes_popular .recipecan_recipe_preview .recipecan_title a {
       text-decoration: none; }
+
+#recipecan_all {
+  padding: 0 0 10px 0; }
+  #recipecan_all h2 {
+    padding: 10px 0 10px 0;
+    line-height: 1.5em;
+    margin: 0; }
 
 #recipecan_courses {
   padding: 0 0 10px 0; }

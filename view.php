@@ -1,5 +1,7 @@
 <?php
 
+require_once 'external/Mustache.php';
+
 class RecipeCan_View {
 
     public $value = array();
@@ -7,6 +9,16 @@ class RecipeCan_View {
 
     public function render($file) {
         echo $this->read($file);
+    }
+
+    public function mustache($file) {
+        $m = new Mustache();
+        $template = file_get_contents($this->options['path'] . '/views/' . $file . '.mustache');
+        return $m->render($template, $this->value, array(
+            'recipe_preview' => file_get_contents($this->options['path'] . '/views/recipes/_preview.mustache'),
+            'recipe_preview_group' => file_get_contents($this->options['path'] . '/views/recipes/_preview_group.mustache'),
+            'recipes' => file_get_contents($this->options['path'] . '/views/recipes/_recipes.mustache')
+        ));
     }
 
     public function read($file) {

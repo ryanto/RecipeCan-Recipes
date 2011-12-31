@@ -1,0 +1,42 @@
+
+<div class="recipecan_list_recipes">
+  {{#to_display}}
+    {{>recipe_preview_group}}    
+  {{/to_display}}
+</div>
+
+
+<div id="recipecan_all">
+  <h2>All Recipes</h2>
+  <a href="{{all_link}}">View all recipes</a>
+</div>
+
+
+<div id="recipecan_courses">
+
+  <h2>Courses</h2>
+
+  {{#courses}}
+    <div class="recipecan_course">
+      <a href="{{link}}">{{name}}</a>
+    </div>
+  {{/courses}}
+    
+    <br class="recipecan_clear" />
+</div>
+
+
+
+<div id="recipecan_search">
+
+  <h2>Search Recipes</h2>
+
+  <div>
+    <form class="recipecan_form" action="{{page_link}}" method="post">
+      <input class="recipecan_search_box" name="search" value="" maxlength="64" size="32" /> &nbsp;&nbsp;
+      <input class="recipecan_submit" type="submit" value=" Search " />
+    </form>
+  </div>
+
+</div>
+

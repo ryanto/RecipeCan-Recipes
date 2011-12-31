@@ -1,0 +1,13 @@
+<div id="recipecan_recipes_{{name}}">
+  <h2>{{title}}</h2>
+
+  {{#recipes}}
+    {{>recipe_preview}}
+  {{/recipes}}
+  {{^recipes}}
+    There are currently no recipes.
+  {{/recipes}}
+  
+  <br class="recipecan_clear" />
+</div>
+

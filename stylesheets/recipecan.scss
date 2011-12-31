@@ -99,6 +99,7 @@ br.recipecan_clear {
     }
 }
 
+#recipecan_recipes_all,
 #recipecan_recipes_recent,
 #recipecan_recipes_search,
 #recipecan_recipes_popular {
@@ -106,7 +107,13 @@ br.recipecan_clear {
     @include list_recipes_section();
     width: 100%;
 
+    div.recipecan_recipe_preview:nth-of-type(4n+5) {
+        clear: both;
+    }
+
     .recipecan_recipe_preview {
+
+        //background-color: red;
 
         padding: 0 0 15px 0;
         margin: 0 2% 0 2%;
@@ -137,6 +144,10 @@ br.recipecan_clear {
 
     }
 
+}
+
+#recipecan_all {
+    @include list_recipes_section();
 }
 
 #recipecan_courses {
