@@ -1,0 +1,20 @@
+{{#display_errors}}
+
+  <div id="recipecan_form_errors">
+    <h3>Opps!</h3>
+    
+    {{#errors}}
+
+      <span class="recipecan_field">
+        {{field}}
+      </span>
+
+      {{#errors}}
+        {{.}}
+      {{/errors}}
+
+    {{/errors}}
+  </div>
+
+{{/display_errors}}
+

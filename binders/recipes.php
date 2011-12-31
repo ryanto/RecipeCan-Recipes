@@ -107,8 +107,6 @@ class RecipeCan_Binders_Recipes extends RecipeCan_Binders_Abstract {
 
         $this->view->set('recipe', $recipe);
         return $this->view->mustache('recipes/_recipe');
-        //return $this->view->mustache('recipes/insert');
-        //return $this->view->read('recipes/insert');
     }
 
     public function page($content) {
@@ -122,7 +120,6 @@ class RecipeCan_Binders_Recipes extends RecipeCan_Binders_Abstract {
 
             $this->view->set('recipe', $recipe);
             return $this->view->mustache('recipes/_recipe');
-            //return $this->view->render('recipes/page');
         } else {
             return $content;
         }

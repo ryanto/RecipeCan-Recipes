@@ -33,8 +33,6 @@ class RecipeCan_Row_Recipe extends RecipeCan_Row_Abstract {
 
     }
 
-
-
     public function name() {
         return $this->get('name');
     }

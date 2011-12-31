@@ -104,7 +104,7 @@ class RecipeCan_Binders_Admin extends RecipeCan_Binders_Abstract {
 
         if ($this->api->failed()) {
             // failed
-            $this->view->set('error', $this->api->errors());
+            $this->view->errors($this->api->errors());
             $this->view->render('admin/setup/login');
         } else {
             // it worked
@@ -311,7 +311,7 @@ class RecipeCan_Binders_Admin extends RecipeCan_Binders_Abstract {
             $this->view->set('message', 'Recipe not found.');
             $this->view->render('admin/error');
         } else {
-            $this->view->set_data('recipe', $recipe);
+            $this->view->set('recipe', $recipe);
             $this->view->render('admin/recipe_photo/show');
         }
     }
@@ -326,7 +326,6 @@ class RecipeCan_Binders_Admin extends RecipeCan_Binders_Abstract {
             'filename' => $_FILES['recipecan_file']['tmp_name']
         ));
 
-
         if ($this->api->failed()) {
             $this->view->set('error', $this->api->response['error']);
         } else {
@@ -338,7 +337,7 @@ class RecipeCan_Binders_Admin extends RecipeCan_Binders_Abstract {
             $this->view->set('saved', true);
         }
 
-        $this->view->set_data('recipe', $recipe);
+        $this->view->set('recipe', $recipe);
         $this->view->render('admin/recipe_photo/show');
     }
 
