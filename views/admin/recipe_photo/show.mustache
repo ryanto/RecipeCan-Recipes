@@ -45,12 +45,12 @@
 
 
 <div>
-  {{#recipe.image_large}}
+  {{#recipe.has_image}}
       <img src="{{recipe.image_large}}"
         alt="Recipe Photo" />
-  {{/recipe.image_large}}
-  {{^recipe.image_large}}
+  {{/recipe.has_image}}
+  {{^recipe.has_image}}
         There is no photo for this recipe.
-  {{/recipe.image_large}}
+  {{/recipe.has_image}}
 </div>
 

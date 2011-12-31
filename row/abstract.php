@@ -15,12 +15,38 @@ abstract class RecipeCan_Row_Abstract extends RecipeCan_Abstract {
         
     }
 
+    public function __get($key) {
+		return isset($this->data[$key]) ? $this->data[$key] : NULL;
+	}
+
+	public function __isset($key) {
+		return isset($this->data[$key]);
+    }
+
+    public function set_array($a) {
+        foreach ($a as $key => $value) {
+            $this->set($key, $value);
+        }
+    }
+
+    public function set($name, $value) {
+        $this->data[$name] = $value;
+    }
+
     public function get($data) {
         if (isset($this->data[$data])) {
             return $this->data[$data];
         } else {
             return '';
         }
+    }
+
+    public function data_to_a($field) {
+        $text = $this->get($field);
+        $text = preg_replace("/[\r\n]{2,}/", "\n", $text);
+        $as_a = split("\n", $text);
+
+        return $as_a;
     }
 
     private function _ensure_model() {

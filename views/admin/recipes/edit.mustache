@@ -1,0 +1,31 @@
+
+<h2>Edit {{recipe.name}}</h2>
+
+<div id="recipecan_edit_recipe">
+
+  <div class="recipecan_form">
+    {{>recipe_form}}
+  </div>
+
+  <div class="recipecan_photo">
+    
+    {{#recipe.has_image}}
+      <div>
+        <a href="?page=recipecan_recipe_photo&id={{recipe.data.id}}">Change Photo</a>
+      </div>
+      <div>
+        <img src="{{recipe.image_large}}" alt="Recipe Photo" />
+      </div>
+    {{/recipe.has_image}}
+    {{^recipe.has_image}}
+      <div>
+          There is no photo for this recipe.
+      </div>
+      <div>
+        <a href="?page=recipecan_recipe_photo&id={{recipe.data.id}}">Add Photo</a>
+      </div>
+    {{/recipe.has_image}}
+
+  </div>
+    
+</div>

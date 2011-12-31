@@ -1,0 +1,15 @@
+
+<h2>Your Account</h2>
+
+{{#user}}
+  <div>
+    Name: {{first_name}}
+  </div>
+
+  {{#outside_blog}}
+    <div>
+      Blog: {{name}} ({{url}})
+    </div>
+  {{/outside_blog}}
+
+{{/user}}

@@ -33,10 +33,8 @@ class RecipeCan_Row_Recipe extends RecipeCan_Row_Abstract {
 
     }
 
-    public function name() {
-        return $this->get('name');
-    }
 
+    
     public function image_medium() {
         return $this->image('medium');
     }
@@ -67,14 +65,11 @@ class RecipeCan_Row_Recipe extends RecipeCan_Row_Abstract {
         return get_permalink($this->data['post_id']);
     }
 
-
-
-
-    public function ingredients() {
+    public function ingredients_to_a() {
         return $this->data_to_a('ingredients');
     }
 
-    public function directions() {
+    public function directions_to_a() {
         return $this->data_to_a('directions');
     }
 
@@ -83,13 +78,7 @@ class RecipeCan_Row_Recipe extends RecipeCan_Row_Abstract {
         $this->save();
     }
 
-    public function data_to_a($field) {
-        $text = $this->get($field);
-        $text = preg_replace("/[\r\n]{2,}/", "\n", $text);
-        $as_a = split("\n", $text);
 
-        return $as_a;
-    }
 
 }
 

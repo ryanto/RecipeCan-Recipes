@@ -181,7 +181,7 @@ class RecipeCan_Binders_Admin extends RecipeCan_Binders_Abstract {
             $this->setup();
         } else {
             $this->api->user();
-            $this->view->set('user', $this->api->response);
+            $this->view->set('user', $this->api->response['user']);
             $this->view->render('admin/user/index');
         }
     }
@@ -191,7 +191,6 @@ class RecipeCan_Binders_Admin extends RecipeCan_Binders_Abstract {
             $this->setup();
         } else {
             $recipes = $this->make_recipes();
-
             $recipes->download_recipes();
 
             $this->view->set('recipes', $recipes->all());
@@ -203,6 +202,8 @@ class RecipeCan_Binders_Admin extends RecipeCan_Binders_Abstract {
         if (!$this->has_required_settings()) {
             $this->setup();
         } else {
+            $this->view->set('form_submit_url', '?page=recipecan_recipes&method=post');
+            $this->view->set('form_show_photo_field', true);
             $this->view->render('admin/recipes/new');
         }
     }
@@ -219,13 +220,9 @@ class RecipeCan_Binders_Admin extends RecipeCan_Binders_Abstract {
         $this->api->create_recipe($data);
 
         if ($this->api->failed()) {
-            $this->view->set('error', $this->api->response['error']);
-
-            // set view from request
-            $view_data = $this->request('recipe');
-            $this->view->set_data('recipe', $view_data);
-
-            $this->view->render('admin/recipes/new');
+            $this->view->errors($this->api->response['error']);
+            $this->view->set('recipe', $this->request('recipe'));
+            $this->new_recipe();
         } else {
             // save the recipe locally
             $recipes = $this->make_recipes();
@@ -259,11 +256,17 @@ class RecipeCan_Binders_Admin extends RecipeCan_Binders_Abstract {
         $recipes = $this->make_recipes();
         $recipe = $recipes->find_by_id($this->request('id'));
 
+        $this->view->set('form_submit_url', '?page=recipecan_recipe&id=' . $recipe->get('id') . '&method=put');
+        $this->view->set('form_show_photo_field', false);
+
         if (!$recipe) {
             $this->view->set('message', 'Recipe not found.');
             $this->view->render('admin/error');
         } else {
-            $this->view->set_data('recipe', $recipe->data);
+            if ($this->view->get('recipe') == NULL) {
+                $this->view->set('recipe', $recipe);
+            }
+
             $this->view->render('admin/recipes/edit');
         }
     }
@@ -272,23 +275,21 @@ class RecipeCan_Binders_Admin extends RecipeCan_Binders_Abstract {
         $recipes = $this->make_recipes();
         $recipe = $recipes->find_by_id($this->request('id'));
 
+        $recipe->set_array($this->request('recipe'));
+
+        // encap this in the model!
         $data = $this->request('recipe');
         $data['id'] = $recipe->get('recipecan_id');
-
-        // try to save via api
         $this->api->update_recipe($data);
 
+
         if ($this->api->failed()) {
-            $this->view->set('error', $this->api->response['error']);
-
-            // set view from request
-            $view_data = $this->request('recipe');
-            $view_data['id'] = $this->request('id');
-            $this->view->set_data('recipe', array_merge($recipe->data, $view_data));
-
-            $this->view->render('admin/recipes/edit');
+            $this->view->errors($this->api->response['error']); 
+            $this->view->set('recipe', $recipe);
+            $this->edit_recipe();
         } else {
             // it worked
+            // shouldnt we save self?
             $recipes->save($this->api->response['recipe'], array('id' => $this->request('id')));
             $this->view->render('admin/recipes/saved');
         }

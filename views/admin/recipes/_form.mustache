@@ -1,0 +1,90 @@
+
+<div id="recipecan_loading" style="display: none;">
+
+  <div class="recipecan_spinner">
+    <img src="{{options.plugin_url}}/images/loading.gif" />
+  </div>
+  <div class="recipecan_text">
+      Saving Recipe.  This could take a few minutes, especially if you are uploading
+      a photo.
+  </div>
+
+  <br class="recipecan_clean" />
+</div>
+
+<div id="recipecan_form_wrapper">
+  {{>form_errors}}
+
+  <form method="post" action="{{form_submit_url}}" enctype="multipart/form-data" id="recipecan_new_recipe_form">
+
+    <ul>
+      <li>
+        <label for="name">Name:</label><br />
+        <input name="recipe[name]" id="name" value="{{recipe.name}}" size="32" />
+      </li>
+
+      <li>
+        <label for="course">Course:</label><br />
+        <select id="course" name="recipe[course]">
+          <option value=""></option>
+          {{#helpers.courses}}
+            <option value="{{.}}">{{.}}</option>
+          {{/helpers.courses}}
+        </select>
+      </li>
+
+      <li>
+        <label for="cuisine">Cuisine:</label><br />
+        <select id="cuisine" name="recipe[cuisine]">
+          <option value=""></option>
+          {{#helpers.cuisines}}
+            <option value="{{.}}">{{.}}</option>
+          {{/helpers.cuisines}}
+        </select>
+      </li>
+
+      <script type="text/javascript">
+        jQuery(document).ready(function($) {
+          $('#course option[value="{{recipe.course}}"]').attr('selected', 'selected');
+          $('#cuisine option[value="{{recipe.cuisine}}"]').attr('selected', 'selected');
+        });
+      </script>
+
+      <li>
+        <label for="make_time">How long to make:</label><br />
+        <input name="recipe[make_time]" id="make_time" value="{{recipe.make_time}}" size="18" />
+      </li>
+
+      <li>
+        <label for="servings">Servings:</label><br />
+        <input name="recipe[servings]" id="servings" value="{{recipe.servings}}" size="18" />
+      </li>
+
+      <li>
+        <label for="tag_list">Tags:</label><br />
+        <input name="recipe[tag_list]" id="tag_list" value="{{recipe.tag_list}}" size="48" />
+      </li>
+
+      <li>
+        <label for="ingredients">Ingredients:</label><br />
+        <textarea id="ingredients" name="recipe[ingredients]" cols="60" rows="8">{{recipe.ingredients}}</textarea>
+      </li>
+
+      <li>
+        <label for="directions">Directions:</label><br />
+        <textarea id="ingredients" name="recipe[directions]" cols="60" rows="12">{{recipe.directions}}</textarea>
+      </li>
+
+      {{#form_show_photo_field}}
+        <li>
+          <label  for="photo">Photo</label><br />
+          <input type="file" id="photo" name="photo" /><br/>
+        </li>
+      {{/form_show_photo_field}}
+
+    </ul>
+
+    <input class="button-primary" type="submit" name="Save" value="Save Recipe" id="submitbutton" />
+
+  </form>
+</div>

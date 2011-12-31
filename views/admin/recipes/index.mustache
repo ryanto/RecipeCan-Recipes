@@ -1,0 +1,79 @@
+<h2>Welcome to RecipeCan for Wordpress</h2>
+
+<div id="recipecan_recipes_welcome">
+  <div class="recipecan_image">
+    <img src="{{options.plugin_url}}/images/logo.png"
+         alt="RecipeCan"
+         height="100"
+         width="223"
+         />
+  </div>
+  <div class="recipecan_text">
+    <div>Thank you for using RecipeCan for Wordpres.</div>
+    <p>
+      We are always looking for ways to improve this Wordpress
+      plugin.  If you have any ideas
+      <a href="http://www.recipecan.com/contact">please contact us</a>
+      and we will be sure to get them added.
+    </p>
+  </div>
+
+  <br class="recipecan_clear" />
+</div>
+
+
+<h2>Getting Started</h2>
+<div>
+  Please read our 
+  <a href="http://www.recipecan.com/howto/recipe-wordpress-plugin" target="_blank">getting started guide</a>
+  to see how you can add recipes and photos directly into your blog posts.
+</div>
+
+
+<h2>Add a Recipe</h2>
+<div>
+  You can <a href="?page=recipecan_new_recipe">add a recipe</a> to your blog at any
+  time.
+</div>
+
+
+<h2>Your Recipes</h2>
+<table id="recipecan_table">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Edit</th>
+      <th>View</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    {{#recipes}}
+      <tr>
+        
+        <td>
+          {{data.name}}
+        </td>
+
+        <td>
+          <a href="?page=recipecan_edit_recipe&id={{data.id}}">Edit</a>
+        </td>
+        
+        <td>
+          <a href="{{link}}">View</a>
+        </td>
+
+      </tr>
+      {{/recipes}}
+      {{^recipes}}
+        <tr>
+          <td colspan="3">
+            You currently have no recipes.  You can 
+            <a href="?page=recipecan_new_recipe">add a recipe</a> to your blog at any
+            time.
+          </td>
+        </tr>
+      {{/recipes}}
+  </tbody>
+</table>
+

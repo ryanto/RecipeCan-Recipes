@@ -103,10 +103,12 @@ class RecipeCan_Binders_Recipes extends RecipeCan_Binders_Abstract {
         $recipes = $this->make_recipes();
         $recipe = $recipes->find(array('id' => $attrs[1]));
 
-        $recipe->viewed();
+        if ($recipe) {
+            $recipe->viewed();
 
-        $this->view->set('recipe', $recipe);
-        return $this->view->mustache('recipes/_recipe');
+            $this->view->set('recipe', $recipe);
+            return $this->view->mustache('recipes/_recipe');
+        }
     }
 
     public function page($content) {
@@ -116,10 +118,12 @@ class RecipeCan_Binders_Recipes extends RecipeCan_Binders_Abstract {
             $recipes = $this->make_recipes();
             $recipe = $recipes->find(array('post_id' => $post->ID));
 
-            $recipe->viewed();
+            if ($recipe) {
+                $recipe->viewed();
 
-            $this->view->set('recipe', $recipe);
-            return $this->view->mustache('recipes/_recipe');
+                $this->view->set('recipe', $recipe);
+                return $this->view->mustache('recipes/_recipe');
+            }
         } else {
             return $content;
         }

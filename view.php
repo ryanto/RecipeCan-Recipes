@@ -7,10 +7,6 @@ class RecipeCan_View {
     public $value = array();
     public $options;
 
-    public function render_old($file) {
-        echo $this->read($file);
-    }
-
     public function render($file) {
         echo $this->mustache($file);
     }
@@ -18,14 +14,36 @@ class RecipeCan_View {
     public function mustache($file) {
         $m = new Mustache();
 
-        $this->value['options'] = $this->options;
+        $this->helpers();
 
         $template = file_get_contents($this->options['path'] . '/views/' . $file . '.mustache');
         return $m->render($template, $this->value, array(
             'recipe_preview' => file_get_contents($this->options['path'] . '/views/recipes/_preview.mustache'),
             'recipe_preview_group' => file_get_contents($this->options['path'] . '/views/recipes/_preview_group.mustache'),
-            'form_errors' => file_get_contents($this->options['path'] . '/views/shared/_form_errors.mustache')
+            'form_errors' => file_get_contents($this->options['path'] . '/views/shared/_form_errors.mustache'),
+            'recipe_form' => file_get_contents($this->options['path'] . '/views/admin/recipes/_form.mustache')
         ));
+    }
+
+    /**
+     * Sets the view up with a bunch of helper data, used mainly for mustache
+     */
+    public function helpers() {
+        $this->value['options'] = $this->options;
+
+        $this->value['helpers'] = array(
+            'courses' => array(
+                "Breakfast", "Lunch", "Snack", "Appetizer", "Dinner", "Side",
+                "Drink", "Dessert"
+            ),
+            'cuisines' => array(
+                "American", "Cajun", "Chinese", "Cuban", "English", "Filipino",
+                "French", "German", "Greek", "Indian", "Irish", "Italian",
+                "Japanese", "Jewish", "Korean", "Mediterranean", "Mexican",
+                "Middle-Eastern", "Moroccan", "Polish", "Russian", "Southern",
+                "Spanish", "Thai", "Vietnamese"
+            )
+        );
     }
 
     public function read($file) {
@@ -61,32 +79,6 @@ class RecipeCan_View {
         $this->set('display_errors', true);
         $this->set('errors', $errors);
     }
-
-    public function set_data($name, $data) {
-        foreach ($data as $attribute => $value) {
-            $this->set($name . "[" . $attribute . "]", $value);
-        }
-        $this->set($name, $data);
-    }
-
-    // helpers
-
-    public function p($str) {
-        echo htmlentities($str);
-    }
-
-    /**
-     * Displays Recipes, pass in array
-     *  title
-     *  recipes
-     *
-     */
-    public function display_recipes($data = array()) {
-        $this->set('display', $data);
-        $this->render('recipes/_recipes');
-    }
-
-    
 
 
 }
