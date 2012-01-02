@@ -31,7 +31,12 @@ class RecipeCan_Binders_Editor extends RecipeCan_Binders_Abstract {
         if ($this->has_required_settings()) {
             $recipes = $this->make_recipes();
 
-            $this->view->set('recipes', $recipes->all_data());
+            $this->view->set('recipes', $recipes->all());
+
+            // for creating new recipes
+            $this->view->set('from_show_photo_field', true);
+            $this->view->set('form_submit_url', 'admin-ajax.php?action=recipecan_create_recipe');
+            
             $this->view->render('editor/index');
         } else {
             $this->view->render('editor/signup');
@@ -46,13 +51,13 @@ class RecipeCan_Binders_Editor extends RecipeCan_Binders_Abstract {
         $this->api->create_recipe($data);
 
         if ($this->api->failed()) {
-            $this->view->set('error', $this->api->response['error']);
+            $this->view->errors($this->api->response['error']);
+            $this->view->set('recipe', $this->request('recipe'));
 
-            // set view from request
-            $view_data = $this->request('recipe');
-            $this->view->set_data('recipe', $view_data);
+            $this->view->set('from_show_photo_field', true);
+            $this->view->set('form_submit_url', 'admin-ajax.php?action=recipecan_create_recipe');
 
-            $this->view->render('admin/recipes/ajax/new');
+            $this->view->render('admin/recipes/_form');
         } else {
             // save the recipe locally
             $recipes = $this->make_recipes();

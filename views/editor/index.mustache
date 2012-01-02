@@ -1,0 +1,41 @@
+<h2>Recipes</h2>
+
+<div id="recipecan_add_new_recipe">
+    <h3>Add a new Recipe</h3>
+    <a href="#" >Add a new Recipe</a>
+</div>
+
+<div id="recipecan_add_new_recipe_box" style="display: none;">
+  <div id="recipecan_form_submit_div">
+    {{>recipe_form}}
+  </div>
+</div>
+
+<div id="recipecan_insert_existing_recipe_box">
+    <h3>Use an existing Recipe</h3>
+    <table>
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>&nbsp;</th>
+            </tr>
+        </thead>
+        <tbody>
+
+          {{#recipes}}
+            <tr>
+              <td>
+                {{name}}
+              </td>
+              <td>
+                <a data-recipe-name="{{safe_name}}"
+                  data-recipe-id="{{data.id}}"
+                  href="#"
+                  class="recipecan_insert_recipe">Insert into Post</a>
+              </td>
+            </tr>
+          {{/recipes}}
+            
+        </tbody>
+    </table>
+</div>
