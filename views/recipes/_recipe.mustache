@@ -1,34 +1,35 @@
 {{#recipe}}
 
-  <div class="recipecan_recipe_show_full recipecan_recipe_{{data.id}}">
+  <div itemscope itemtype="http://schema.org/Recipe" class="recipecan_recipe_show_full recipecan_recipe_{{data.id}}">
 
     <!-- RecipeCanId:{{data.recipecan_id}} -->
 
     <div class="recipecan_title">
-      <h2>{{data.name}}</h2>
+      <h2 itemprop="name">{{data.name}}</h2>
     </div>
 
     {{#has_image}}
       <div class="recipecan_image">
         <img src="{{image}}"
           alt="{{safe_name}} Recipe"
-             />
+          itemprop="image" 
+          />
        </div>
     {{/has_image}}
 
     <div class="recipecan_tags">
-      {{data.tag_list}}
+      <span itemprop="recipeCategory">{{data.tag_list}}</span>
     </div>
 
     <div class="recipecan_info">
       {{#data.make_time}}
-        Cooks in {{data.make_time}}
+        Cooks in <time itemprop="totalTime">{{data.make_time}}</time>
       {{/data.make_time}}
 
       &nbsp;&nbsp;
 
       {{#data.servings}}
-        Servers {{data.servings}}
+        Servers <span itemprop="recipeYield">{{data.servings}}</span>
       {{/data.servings}}
     </div>
 
@@ -37,14 +38,16 @@
         <strong>Ingredients</strong>
         <ul>
           {{#ingredients_to_a}}
-            <li>{{.}}</li>
+            <li itemprop="ingredients">
+              {{.}}
+            </li>
           {{/ingredients_to_a}}
         </ul>
       </div>
 
       <div class="recipecan_directions">
         <strong>Directions</strong>
-        <ul>
+        <ul itemprop="recipeInstructions">
           {{#directions_to_a}}
             <li>{{.}}</li>
           {{/directions_to_a}}
