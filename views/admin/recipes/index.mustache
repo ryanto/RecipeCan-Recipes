@@ -44,6 +44,7 @@
       <th>Name</th>
       <th>Edit</th>
       <th>View</th>
+      <th>Delete</th>
     </tr>
   </thead>
 
@@ -63,6 +64,11 @@
           <a href="{{link}}">View</a>
         </td>
 
+        <td>
+          <a class="recipecan_delete_confirm" 
+            href="?page=recipecan_delete_recipe&id={{data.id}}">Delete</a>
+        </td>
+
       </tr>
       {{/recipes}}
       {{^recipes}}
@@ -77,3 +83,16 @@
   </tbody>
 </table>
 
+<script type="text/javascript">
+
+  jQuery(document).ready(function($) {
+    $('.recipecan_delete_confirm').click(function(event) {
+
+      if (!confirm("Are you sure you want to remove this recipe?")) {
+        event.preventDefault();
+      }
+
+    });
+  });
+
+</script>

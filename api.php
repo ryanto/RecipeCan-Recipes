@@ -114,6 +114,10 @@ class RecipeCan_Api extends RecipeCan_Abstract {
             'recipe' => $args
         ));
     }
+    
+    public function delete_recipe($args) {
+        return $this->call('delete', 'recipes/' . $args['id']);
+    }
 
     public function create_recipe($args) {
         return $this->call('post', 'recipes', array(

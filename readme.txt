@@ -3,8 +3,8 @@ Contributors: ryanto
 Donate link: http://www.recipecan.com/howto/recipe-wordpress-plugin
 Tags: recipe, recipes, recipecan
 Requires at least: 3.0
-Tested up to: 3.3
-Stable tag: 0.2.1
+Tested up to: 3.3.1
+Stable tag: 0.2.2
 
 A Wordpress plugin that organizes recipes on your blog.
 
@@ -29,6 +29,9 @@ the most popular recipes on it's homepage.
 3. Editing Recipe
 
 == Changelog ==
+
+= 0.2.2 =
+* Added the ability to delete/remove a recipe
 
 = 0.2.1 =
 * Upload type checking to prevent error/warnings from being displayed on some php installs

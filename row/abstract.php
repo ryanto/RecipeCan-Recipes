@@ -70,6 +70,11 @@ abstract class RecipeCan_Row_Abstract extends RecipeCan_Abstract {
         }
     }
 
+    public function delete() {
+        if (isset($this->data['id'])) {
+            $this->_model->delete(array('id' => $this->data['id']));
+        }
+    }
 }
 
 ?>

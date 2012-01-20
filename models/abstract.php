@@ -51,7 +51,6 @@ class RecipeCan_Models_Abstract extends RecipeCan_Abstract {
     }
 
     public function save($data, $where = array()) {
-        global $wpdb;
         $find = $this->find($where);
 
         if ($find) {
@@ -69,6 +68,30 @@ class RecipeCan_Models_Abstract extends RecipeCan_Abstract {
     private function _insert($data) {
         global $wpdb;
         $wpdb->insert($this->table_name(), $data);
+    }
+
+    public function delete($where) {
+
+        // guard to make sure they don't delete everything
+        if (count($where) == 0) {
+            return false;
+        }
+
+        global $wpdb;
+
+        $sql = array();
+        foreach ($where as $column => $value) {
+            $sql[] = "`" . $wpdb->escape($column) . "` = '" . $wpdb->escape($value) . "'";
+        }
+        $where_string = implode(" and ", $sql);
+
+        $wpdb->query(
+            $wpdb->prepare(
+                "DELETE FROM `" . $wpdb->escape($this->table_name()) . "`" .
+                " WHERE " . $where_string
+            ), ARRAY_A
+        );
+
     }
 
     public function find($where, $other = array()) {

@@ -33,7 +33,12 @@ class RecipeCan_Row_Recipe extends RecipeCan_Row_Abstract {
 
     }
 
-
+    public function delete() {
+        if (isset($this->data['post_id'])) {
+            wp_delete_post($this->data['post_id'], true);
+        }
+        parent::delete();
+    }
     
     public function image_medium() {
         return $this->image('medium');

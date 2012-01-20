@@ -48,6 +48,10 @@ class RecipeCan_Binders_Admin extends RecipeCan_Binders_Abstract {
                     'title' => 'Recipe',
                     'call' => 'edit_recipe'
                 ),
+                'recipecan_delete_recipe' => array(
+                    'title' => 'Delete Recipe',
+                    'call' => 'delete_recipe'
+                ),
                 'recipecan_recipe_photo' => array(
                     'title' => 'Recipe Photo',
                     'call' => 'recipe_photo'
@@ -268,6 +272,24 @@ class RecipeCan_Binders_Admin extends RecipeCan_Binders_Abstract {
             }
 
             $this->view->render('admin/recipes/edit');
+        }
+    }
+
+    public function delete_recipe() {
+        $recipes = $this->make_recipes();
+        $recipe = $recipes->find_by_id($this->request('id'));
+
+        if (!$recipe) {
+            $this->view->set('message', 'Recipe not found.');
+            $this->view->render('admin/error');
+        } else {
+            // encap this in the model!
+            $this->api->delete_recipe(array(
+                'id' => $recipe->get('recipecan_id')
+            ));
+
+            $recipe->delete();
+            $this->view->render('admin/recipes/delete');
         }
     }
 
