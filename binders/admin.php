@@ -235,6 +235,7 @@ class RecipeCan_Binders_Admin extends RecipeCan_Binders_Abstract {
             // create a post
             $recipecan_id = $this->api->response['recipe']['recipecan_id'];
             $recipe = $recipes->find(array('recipecan_id' => $recipecan_id));
+
             $recipe->tie_to_post();
 
             // upload photo if the user submitted one

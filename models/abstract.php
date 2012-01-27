@@ -104,15 +104,15 @@ class RecipeCan_Models_Abstract extends RecipeCan_Abstract {
 
         $sql = array();
         foreach ($where as $column => $value) {
-            $sql[] = "`" . mysql_real_escape_string($column) . "` = '" . mysql_real_escape_string($value) . "'";
+            $sql[] = "`" . $wpdb->escape($column) . "` = '" . $wpdb->escape($value) . "'";
         }
         $where_string = implode(" and ", $sql);
 
         $data = $wpdb->get_row(
-                        $wpdb->prepare(
-                                "SELECT * FROM `" . mysql_real_escape_string($this->table_name()) . "`" .
-                                " WHERE " . $where_string
-                        ), ARRAY_A
+            $wpdb->prepare(
+                    "SELECT * FROM `" . $wpdb->escape($this->table_name()) . "`" .
+                    " WHERE " . $where_string
+            ), ARRAY_A
         );
 
         if (isset($data['id'])) {
