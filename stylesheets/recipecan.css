@@ -137,6 +137,9 @@ br.recipecan_clear {
     padding-bottom: 2px; }
   .recipecan_recipe_show_full .recipecan_directions, .recipecan_recipe_show_full .recipecan_ingredients {
     margin: 8px 0 0 0; }
+    .recipecan_recipe_show_full .recipecan_directions ul, .recipecan_recipe_show_full .recipecan_ingredients ul {
+      padding: 0;
+      margin: 0; }
   .recipecan_recipe_show_full .recipecan_ingredients {
     float: left;
     width: 45%;
