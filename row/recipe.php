@@ -39,6 +39,46 @@ class RecipeCan_Row_Recipe extends RecipeCan_Row_Abstract {
         }
         parent::delete();
     }
+
+    public function make_time_microdata() {
+        
+        if ($this->data['make_time_in_seconds'] == 0) {
+            return "";
+        }
+
+        $seconds = $this->data['make_time_in_seconds'];
+    
+        $days = (int)($seconds / 86400);
+        $seconds = $seconds % 86400; 
+
+        $hours = (int)($seconds / 3600);
+        $seconds = $seconds % 3600;
+
+        $minutes = (int)($seconds / 60);
+        $seconds = $seconds % 60;
+
+        $microdata = "P";
+
+        if ($days > 0) {
+            $microdata .= $days . "D";
+        }
+
+        $microdata .= "T";
+
+        if ($hours > 0) {
+            $microdata .= $hours . "H";
+        }
+
+        if ($minutes > 0) {
+            $microdata .= $minutes . "M";
+        }
+
+        if ($seconds > 0) {
+            $microdata .= $seconds . "S";
+        }
+
+        return $microdata;
+    }
     
     public function image_medium() {
         return $this->image('medium');
@@ -83,6 +123,7 @@ class RecipeCan_Row_Recipe extends RecipeCan_Row_Abstract {
         $this->save();
     }
 
+  
 
 
 }
