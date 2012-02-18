@@ -40,6 +40,14 @@ class RecipeCan_Api extends RecipeCan_Abstract {
             echo "<br><br>";
         }
 
+        // apperently some wordpress http agents dont actually
+        // allow delete requests.  send a post request and
+        // attach _method=delete
+        if ($verb == 'delete') {
+            $verb = 'post';
+            $args['_method'] = 'delete';
+        }
+
         $wp_remote_args = array(
             'headers' => $headers,
             'method' => strtoupper($verb),
