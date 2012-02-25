@@ -55,6 +55,10 @@ class RecipeCan_Binders_Admin extends RecipeCan_Binders_Abstract {
                 'recipecan_recipe_photo' => array(
                     'title' => 'Recipe Photo',
                     'call' => 'recipe_photo'
+                ),
+                'recipecan_user_logout' => array(
+                    'title' => 'Logout',
+                    'call' => 'user_logout'
                 )
             );
 
@@ -188,6 +192,11 @@ class RecipeCan_Binders_Admin extends RecipeCan_Binders_Abstract {
             $this->view->set('user', $this->api->response['user']);
             $this->view->render('admin/user/index');
         }
+    }
+
+    public function user_logout() {
+        $this->delete_option('single_access_token');
+        $this->view->render('admin/user/logout');
     }
 
     public function recipes() {
