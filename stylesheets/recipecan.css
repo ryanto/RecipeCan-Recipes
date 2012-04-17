@@ -152,9 +152,9 @@ br.recipecan_clear {
   .recipecan_recipe_show_full ul {
     padding: 0;
     margin: 0; }
-  .recipecan_recipe_show_full li {
-    list-style-type: none;
-    padding-bottom: 10px; }
+    .recipecan_recipe_show_full ul li {
+      list-style-type: none;
+      padding-bottom: 10px; }
   .recipecan_recipe_show_full .recipecan_options {
     padding: 10px 0 0 0;
     text-align: center;

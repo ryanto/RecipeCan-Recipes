@@ -240,12 +240,15 @@ br.recipecan_clear {
     ul {
 	padding: 0;
         margin: 0;
+
+	li {
+            list-style-type: none;
+            padding-bottom: 10px;
+    	}
+
     }
 
-    li {
-        list-style-type: none;
-        padding-bottom: 10px;
-    }
+
 
     .recipecan_options {
 
