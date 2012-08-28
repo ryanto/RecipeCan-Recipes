@@ -10,10 +10,7 @@
 
     {{#has_image}}
       <div class="recipecan_image">
-        <img src="{{image}}"
-          alt="{{safe_name}} Recipe"
-          itemprop="image"
-          />
+        <img src="{{image}}" alt="{{safe_name}} Recipe" itemprop="image" />
        </div>
     {{/has_image}}
 
@@ -57,18 +54,10 @@
       <br class="recipecan_clear" />
     </div>
 
-
     <div class="recipecan_options">
-
-      <a href="#"
-        data-recipe-id="{{data.id}}"
-        class="recipecan_print_button">Print Recipe</a> |
-      <a href="#"
-        data-recipe-id="{{data.id}}"
-        class="recipecan_print_ingredients_button">Print Ingredients Only</a>
-
+      <a href="#" data-recipe-id="{{data.id}}" class="recipecan_print_button">Print Recipe</a> |
+      <a href="#" data-recipe-id="{{data.id}}" class="recipecan_print_ingredients_button">Print Ingredients Only</a>
     </div>
-
 
   </div>
 {{/recipe}}
