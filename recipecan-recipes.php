@@ -3,12 +3,12 @@
   Plugin Name: RecipeCan Recipes
   Plugin URI: http://www.recipecan.com/howto/recipe-wordpress-plugin
   Description: A WordPress that organizes recipes on your food or cooking blog. Each recipe can be inserted in a post and stored on a recipes page.
-  Version: 0.2.7
+  Version: 0.2.8
   Author: Ryan (ryanto)
   Author URI: http://www.recipecan.com
  */
 
-define('RECIPECAN_VERSION', '0.2.7');
+define('RECIPECAN_VERSION', '0.2.8');
 
 $check_development = true;
 
