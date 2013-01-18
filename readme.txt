@@ -3,8 +3,8 @@ Contributors: ryanto
 Donate link: http://www.recipecan.com/howto/recipe-wordpress-plugin
 Tags: recipe, recipes, recipecan
 Requires at least: 3.0
-Tested up to: 3.3.1
-Stable tag: 0.2.8
+Tested up to: 3.5
+Stable tag: 0.2.9
 
 Organizes recipes on your food or cooking blog. Each recipe can be inserted in a post and stored on a recipes page.
 
@@ -29,6 +29,9 @@ the most popular recipes on it's homepage.
 3. Editing Recipe
 
 == Changelog ==
+
+= 0.2.9 =
+* wpdb-prepare now requires second param. Removed warnings.
 
 = 0.2.8 =
 * Updated views to not have newlines between templating keywords

@@ -111,7 +111,7 @@ class RecipeCan_Models_Abstract extends RecipeCan_Abstract {
         $data = $wpdb->get_row(
             $wpdb->prepare(
                     "SELECT * FROM `" . $wpdb->escape($this->table_name()) . "`" .
-                    " WHERE " . $where_string
+                    " WHERE " . $where_string, null
             ), ARRAY_A
         );
 
